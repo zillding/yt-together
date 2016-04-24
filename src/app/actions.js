@@ -125,3 +125,7 @@ export function playNext() {
     dispatch(sendAction(actions.PLAY, nextVideoId))
   }
 }
+
+export function toggleSearch() {
+  return { type: 'TOGGLE_SEARCH' }
+}

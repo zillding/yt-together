@@ -116,3 +116,12 @@ export function isPlaying(state = false, action) {
       return state
   }
 }
+
+export function showSearch(state = false, action) {
+  switch (action.type) {
+    case 'TOGGLE_SEARCH':
+      return !state
+    default:
+      return state
+  }
+}
