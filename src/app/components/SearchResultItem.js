@@ -3,6 +3,14 @@ import YouTube from 'react-youtube'
 
 import { getVideoIndex } from '../utils'
 
+import VideoInfo from './VideoInfo'
+
+const containerStyle = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+}
+
 export default class SearchResultItem extends Component {
   constructor(props) {
     super(props)
@@ -37,22 +45,22 @@ export default class SearchResultItem extends Component {
     const { peeking } = this.state
 
     return (
-      <div>
+      <div style={containerStyle}>
         <Item
           peeking={peeking}
           data={this.props.data} />
-        <button onClick={this._handleTogglePeek}>
-          { peeking ? 'Done' : 'Peek' }
-        </button>
-        {
-          getVideoIndex(playlist, data.id.videoId) !== -1 ?
-            <span>Added</span> :
-            <button
-              disabled={this.state.isAdding}
-              onClick={this._handleAdd}>
-              Add
-            </button>
-        }
+        <div>
+          <PeekButton
+            peeking={peeking}
+            onClick={this._handleTogglePeek} />
+          {
+            getVideoIndex(playlist, data.id.videoId) !== -1 ?
+              <AddLabel/> :
+              <AddButton
+                isAdding={this.state.isAdding}
+                onClick={this._handleAdd} />
+          }
+        </div>
       </div>
     )
   }
@@ -63,6 +71,37 @@ SearchResultItem.propTypes = {
   data: PropTypes.object.isRequired,
   onAdd: PropTypes.func.isRequired
 }
+
+const PeekButton = ({ peeking, onClick }) => (
+  <button
+    className="ui icon button"
+    onClick={onClick}>
+    <i className="film icon"></i>
+  </button>
+)
+
+const AddButton = ({ isAdding, onClick }) => {
+  const cn = isAdding ?
+    'ui positive disabled loading icon button' :
+    'ui positive icon button'
+
+  return (
+    <button
+      className={cn}
+      disabled={isAdding}
+      onClick={onClick}>
+      <i className="plus icon"></i>
+    </button>
+  )
+}
+
+const AddLabel = () => (
+  <button
+    className="ui disabled green basic icon button"
+    disabled={true}>
+    <i className="checkmark icon"></i>
+  </button>
+)
 
 const Item = ({ peeking, data }) => {
   if (peeking) {
@@ -81,11 +120,5 @@ const Item = ({ peeking, data }) => {
     )
   }
 
-  const { snippet } = data || {}
-  return (
-    <div>
-      <img src={snippet.thumbnails.default.url} alt="thumbnail"/>
-      <h4>{snippet.title}</h4>
-    </div>
-  )
+  return <VideoInfo data={data} />
 }

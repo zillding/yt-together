@@ -1,5 +1,13 @@
 import React, { Component, PropTypes } from 'react'
 
+import VideoInfo from './VideoInfo'
+
+const containerStyle = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+}
+
 export default class PlayListItem extends Component {
   constructor(props) {
     super(props)
@@ -32,26 +40,22 @@ export default class PlayListItem extends Component {
 
   render() {
     const { data, currentPlayingVideoId } = this.props
-    const { snippet } = data || {}
 
     return (
-      <div>
-        <img src={snippet.thumbnails.default.url} alt="thumbnail"/>
-        <h4>{snippet.title}</h4>
-        {
-          currentPlayingVideoId === data.id.videoId ?
-            null :
-            <button
-              disabled={this.state.isSelecting}
-              onClick={this._handlePlayClick}>
-              Play
-            </button>
-        }
-        <button
-          disabled={this.state.isDeleting}
-          onClick={this._handleDeleteClick}>
-          Delete
-        </button>
+      <div style={containerStyle}>
+        <VideoInfo data={data} />
+        <div>
+          {
+            currentPlayingVideoId === data.id.videoId ?
+              null :
+              <PlayButton
+                isSelecting={this.state.isSelecting}
+                onClick={this._handlePlayClick} />
+          }
+          <DeleteButton
+            isDeleting={this.state.isDeleting}
+            onClick={this._handleDeleteClick} />
+        </div>
       </div>
     )
   }
@@ -63,4 +67,32 @@ PlayListItem.propTypes = {
   currentPlayingVideoId: PropTypes.string.isRequired,
   onSelect: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired
+}
+
+const PlayButton = ({ isSelecting, onClick }) => {
+  const cn = isSelecting ?
+    'ui disabled icon button loading' :
+    'ui icon button'
+  return (
+    <button
+      className={cn}
+      disabled={isSelecting}
+      onClick={onClick}>
+      <i className="play icon"></i>
+    </button>
+  )
+}
+
+const DeleteButton = ({ isDeleting, onClick }) => {
+  const cn = isDeleting ?
+    'ui disabled negative icon button loading' :
+    'ui negative icon button'
+  return (
+    <button
+      className={cn}
+      disabled={isDeleting}
+      onClick={onClick}>
+      <i className="remove icon"></i>
+    </button>
+  )
 }

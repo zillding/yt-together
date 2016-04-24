@@ -29,6 +29,7 @@ export default class PlayerControl extends Component {
       return (
         <div>
           <button
+            className="ui button"
             disabled={this.state.sendingCmd}
             onClick={onPause}>
             Pause
@@ -39,6 +40,7 @@ export default class PlayerControl extends Component {
     return (
       <div>
         <button
+          className="ui button"
           disabled={this.state.sendingCmd}
           onClick={onResume}>
           Resume

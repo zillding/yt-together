@@ -20,7 +20,9 @@ class Search extends Component {
 
     return (
       <div>
-        <SearchInput onSearch={onSearch} />
+        <SearchInput
+          isSearching={isSearching}
+          onSearch={onSearch} />
         <SearchResult
           playlist={playlist}
           data={searchResult}

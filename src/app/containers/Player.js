@@ -1,21 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import YouTube from 'react-youtube'
 
 import { actions, sendAction, playNext } from '../actions'
 const { PAUSE, RESUME } = actions
 
+import YoutubePlayer from '../components/YoutubePlayer'
 import PlayerControl from '../components/PlayerControl'
 
 export default class Player extends Component {
-  componentWillReceiveProps({ isPlaying }) {
-    if (isPlaying) {
-      this._player.playVideo()
-    } else {
-      this._player.pauseVideo()
-    }
-  }
-
   render() {
     const {
       isPlaying,
@@ -24,18 +16,12 @@ export default class Player extends Component {
       onPause,
       onResume,
     } = this.props
-    const opts = {
-      playerVars: {
-        autoplay: 1
-      }
-    }
 
     return (
       <div>
-        <YouTube
+        <YoutubePlayer
           videoId={currentPlayingVideoId}
-          opts={opts}
-          onReady={e => this._player = e.target}
+          isPlaying={isPlaying}
           onEnd={onEnd} />
         <PlayerControl
           isPlaying={isPlaying}

@@ -16,16 +16,23 @@ export default class SearchInput extends Component {
   }
 
   render() {
+    const { isSearching } = this.props
+    const cn = `ui fluid left icon input${isSearching ? ' loading' : ''}`
+
     return (
-      <input
-        ref="input"
-        type="text"
-        onKeyPress={this._handleEnter}
-        placeholder="Press enter to search..." />
+      <div className={cn}>
+        <input
+          ref="input"
+          type="text"
+          onKeyPress={this._handleEnter}
+          placeholder="Press enter to search..." />
+        <i className="search icon"></i>
+      </div>
     )
   }
 }
 
 SearchInput.propTypes = {
-  onSearch: PropTypes.func.isRequired
+  isSearching: PropTypes.bool.isRequired,
+  onSearch: PropTypes.func.isRequired,
 }
