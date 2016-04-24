@@ -16,12 +16,3 @@ app.use(require('webpack-hot-middleware')(compiler))
 app.get('*', (req, res) => {
   res.sendFile(`${__dirname}/public/index.html`)
 })
-
-app.listen(3000, err => {
-  if (err) {
-    console.log(err)
-    return
-  }
-
-  console.log('Listening at http://localhost:3000')
-})

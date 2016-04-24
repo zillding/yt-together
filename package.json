@@ -35,13 +35,16 @@
     "react-redux": "^4.4.5",
     "react-youtube": "^6.1.0",
     "redux": "^3.5.1",
+    "redux-logger": "^2.6.1",
     "redux-thunk": "^2.0.1",
     "rimraf": "^2.4.3",
+    "socket.io-client": "^1.4.5",
     "webpack": "^1.12.9",
     "webpack-dev-middleware": "^1.4.0",
     "webpack-hot-middleware": "^2.9.1"
   },
   "dependencies": {
-    "express": "^4.13.3"
+    "express": "^4.13.3",
+    "socket.io": "^1.4.5"
   }
 }

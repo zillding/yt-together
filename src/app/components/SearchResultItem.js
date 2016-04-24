@@ -7,10 +7,16 @@ export default class SearchResultItem extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      peeking: false
+      peeking: false,
+      isAdding: false
     }
     this._handleTogglePeek = this._handleTogglePeek.bind(this)
     this._handleAdd = this._handleAdd.bind(this)
+  }
+
+  componentWillReceiveProps({ playlist, data }) {
+    if (getVideoIndex(playlist, data.id.videoId) === -1)
+      this.setState({ isAdding: false })
   }
 
   _handleTogglePeek() {
@@ -21,6 +27,8 @@ export default class SearchResultItem extends Component {
 
   _handleAdd() {
     const { data, onAdd } = this.props
+
+    this.setState({ isAdding: true })
     onAdd(data)
   }
 
@@ -39,7 +47,11 @@ export default class SearchResultItem extends Component {
         {
           getVideoIndex(playlist, data.id.videoId) !== -1 ?
             <span>Added</span> :
-            <button onClick={this._handleAdd}>Add</button>
+            <button
+              disabled={this.state.isAdding}
+              onClick={this._handleAdd}>
+              Add
+            </button>
         }
       </div>
     )

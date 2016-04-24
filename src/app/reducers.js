@@ -1,4 +1,21 @@
 import { List } from 'immutable'
+import io from 'socket.io-client'
+
+import { actions } from './actions'
+const {
+  ADD_VIDEO,
+  DELETE_VIDEO,
+  PLAY
+} = actions
+
+export function socket(state = null, action) {
+  switch (action.type) {
+    case 'SET_SOCKET':
+      return action.socket
+    default:
+      return state
+  }
+}
 
 export function isSearching(state = false, action) {
   switch (action.type) {
@@ -31,11 +48,44 @@ export function searchError(state = null, action) {
   }
 }
 
+export function isAddingVideo(state = false, action) {
+  switch (action.type) {
+    case `SEND_${ADD_VIDEO}`:
+      return true
+    case ADD_VIDEO:
+      return false
+    default:
+      return state
+  }
+}
+
+export function isDeletingVideo(state = false, action) {
+  switch (action.type) {
+    case `SEND_${DELETE_VIDEO}`:
+      return true
+    case DELETE_VIDEO:
+      return false
+    default:
+      return state
+  }
+}
+
+export function isSelectingVideo(state = false, action) {
+  switch (action.type) {
+    case `SEND_${PLAY}`:
+      return true
+    case PLAY:
+      return false
+    default:
+      return state
+  }
+}
+
 export function playlist(state = List(), action) {
   switch (action.type) {
-    case 'ADD_VIDEO':
+    case ADD_VIDEO:
       return state.push(action.data)
-    case 'DELETE_VIDEO':
+    case DELETE_VIDEO:
       return state.delete(action.index)
     default:
       return state

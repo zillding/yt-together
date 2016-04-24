@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { play, deleteVideo } from '../actions'
+import { play, actions, sendAction } from '../actions'
 import PlayListItem from '../components/PlayListItem'
+
+const { DELETE_VIDEO, PLAY } = actions
 
 class PlayList extends Component {
   render() {
@@ -19,9 +21,10 @@ class PlayList extends Component {
         {
           playlist.map((data, index) =>
             <PlayListItem
-              key={index}
+              key={data.id.videoId}
               index={index}
               data={data}
+              currentPlayingVideoId={currentPlayingVideoId}
               onSelect={onSelect}
               onDelete={onDelete} />
           )
@@ -40,8 +43,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSelect: videoId => dispatch(play(videoId)),
-    onDelete: index => dispatch(deleteVideo(index))
+    onSelect: videoId => dispatch(sendAction(PLAY, videoId)),
+    onDelete: index => dispatch(sendAction(DELETE_VIDEO, index))
   }
 }
 

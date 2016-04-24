@@ -4,7 +4,7 @@ import SearchResultItem from './SearchResultItem'
 
 export default class SearchResult extends Component {
   render() {
-    const { playlist, data, onAdd } = this.props
+    const { playlist, data, isAddingVideo, onAdd } = this.props
 
     return (
       <div>

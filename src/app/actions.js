@@ -1,4 +1,5 @@
 import { stringify } from 'qs'
+import io from 'socket.io-client'
 
 import { SEARCH_API, API_KEY } from './config'
 import { getVideoIndex, getNextVideoId } from './utils'
@@ -39,9 +40,43 @@ function setSearchError(error) {
   return { type: 'SET_SEARCH_ERROR', error}
 }
 
-export function addVideo(data) {
+export const actions = {
+  ADD_VIDEO: 'ADD_VIDEO',
+  DELETE_VIDEO: 'DELETE_VIDEO',
+  PLAY: 'PLAY'
+}
+
+export function setUpSocket() {
   return (dispatch, getState) => {
-    dispatch({ type: 'ADD_VIDEO', data })
+    const socket = io()
+    socket.on('action', msg => {
+      switch (msg.type) {
+        case actions.ADD_VIDEO:
+          return dispatch(addVideo(msg.data))
+        case actions.DELETE_VIDEO:
+          return dispatch(deleteVideo(msg.data))
+        case actions.PLAY:
+          return dispatch(play(msg.data))
+        default:
+          return
+      }
+    })
+    dispatch({ type: 'SET_SOCKET', socket })
+  }
+}
+
+export function sendAction(action, data) {
+  return (dispatch, getState) => {
+    dispatch({ type: `SEND_${action}` })
+
+    const { socket } = getState()
+    socket.emit('action', { type: action, data })
+  }
+}
+
+function addVideo(data) {
+  return (dispatch, getState) => {
+    dispatch({ type: actions.ADD_VIDEO, data })
 
     const { playlist, currentPlayingVideoId } = getState()
     if (playlist.size === 1) {
@@ -51,13 +86,13 @@ export function addVideo(data) {
   }
 }
 
-export function deleteVideo(index) {
+function deleteVideo(index) {
   return (dispatch, getState) => {
     const { playlist, currentPlayingVideoId } = getState()
     const currentVideoIndex = getVideoIndex(playlist, currentPlayingVideoId)
     const nextVideoId = getNextVideoId(playlist, currentPlayingVideoId)
 
-    dispatch({ type: 'DELETE_VIDEO', index })
+    dispatch({ type: actions.DELETE_VIDEO, index })
 
     if (currentVideoIndex === index) {
       dispatch(play(nextVideoId))
@@ -65,6 +100,6 @@ export function deleteVideo(index) {
   }
 }
 
-export function play(videoId) {
+function play(videoId) {
   return { type: 'PLAY', videoId }
 }

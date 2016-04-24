@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { search, addVideo } from '../actions'
+import { search, actions, sendAction } from '../actions'
 import SearchInput from '../components/SearchInput'
 import SearchResult from '../components/SearchResult'
+
+const { ADD_VIDEO } = actions
 
 class Search extends Component {
   render() {
@@ -40,7 +42,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onSearch: text => dispatch(search(text)),
-    onAdd: data => dispatch(addVideo(data))
+    onAdd: data => dispatch(sendAction(ADD_VIDEO, data))
   }
 }
 
