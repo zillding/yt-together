@@ -29,10 +29,10 @@ export default class PlayerControl extends Component {
       return (
         <div>
           <button
-            className="ui button"
+            className="ui icon button"
             disabled={this.state.sendingCmd}
             onClick={onPause}>
-            Pause
+            <i className="pause icon"></i>
           </button>
         </div>
       )
@@ -40,10 +40,10 @@ export default class PlayerControl extends Component {
     return (
       <div>
         <button
-          className="ui button"
+          className="ui icon button"
           disabled={this.state.sendingCmd}
           onClick={onResume}>
-          Resume
+          <i className="play icon"></i>
         </button>
       </div>
     )

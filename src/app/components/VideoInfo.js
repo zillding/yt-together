@@ -5,6 +5,10 @@ const containerStyle = {
   alignItems: 'center',
 }
 
+const imgStyle = {
+  marginRight: 10
+}
+
 export default class VideoInfo extends Component {
   render() {
     const { data } = this.props
@@ -12,7 +16,10 @@ export default class VideoInfo extends Component {
 
     return (
       <div style={containerStyle}>
-        <img src={snippet.thumbnails.default.url} alt="thumbnail"/>
+        <img
+          style={imgStyle}
+          src={snippet.thumbnails.default.url}
+          alt="thumbnail"/>
         <div>{snippet.title}</div>
       </div>
     )

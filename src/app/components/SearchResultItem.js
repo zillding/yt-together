@@ -3,13 +3,8 @@ import YouTube from 'react-youtube'
 
 import { getVideoIndex } from '../utils'
 
+import { ListItem, ListItemControl } from './ListItem'
 import VideoInfo from './VideoInfo'
-
-const containerStyle = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-}
 
 export default class SearchResultItem extends Component {
   constructor(props) {
@@ -45,11 +40,11 @@ export default class SearchResultItem extends Component {
     const { peeking } = this.state
 
     return (
-      <div style={containerStyle}>
+      <ListItem>
         <Item
           peeking={peeking}
           data={this.props.data} />
-        <div>
+        <ListItemControl>
           <PeekButton
             peeking={peeking}
             onClick={this._handleTogglePeek} />
@@ -60,8 +55,8 @@ export default class SearchResultItem extends Component {
                 isAdding={this.state.isAdding}
                 onClick={this._handleAdd} />
           }
-        </div>
-      </div>
+        </ListItemControl>
+      </ListItem>
     )
   }
 }
@@ -72,13 +67,16 @@ SearchResultItem.propTypes = {
   onAdd: PropTypes.func.isRequired
 }
 
-const PeekButton = ({ peeking, onClick }) => (
-  <button
-    className="ui icon button"
-    onClick={onClick}>
-    <i className="film icon"></i>
-  </button>
-)
+const PeekButton = ({ peeking, onClick }) => {
+  const iconCn = peeking ? 'remove icon' : 'film icon'
+  return (
+    <button
+      className="ui icon button"
+      onClick={onClick}>
+      <i className={iconCn}></i>
+    </button>
+  )
+}
 
 const AddButton = ({ isAdding, onClick }) => {
   const cn = isAdding ?
@@ -107,6 +105,8 @@ const Item = ({ peeking, data }) => {
   if (peeking) {
     const { id: { videoId } } = data
     const opts = {
+      height: '240',
+      width: '400',
       playerVars: {
         autoplay: 1
       }

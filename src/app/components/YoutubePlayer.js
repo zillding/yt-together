@@ -13,6 +13,8 @@ export default class YoutubePlayer extends Component {
   render() {
     const { videoId, isPlaying, onEnd } = this.props
     const opts = {
+      height: '480',
+      width: '853',
       playerVars: {
         autoplay: 1
       }

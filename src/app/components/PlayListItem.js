@@ -1,12 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 
+import { ListItem, ListItemControl } from './ListItem'
 import VideoInfo from './VideoInfo'
-
-const containerStyle = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-}
 
 export default class PlayListItem extends Component {
   constructor(props) {
@@ -42,9 +37,9 @@ export default class PlayListItem extends Component {
     const { data, currentPlayingVideoId } = this.props
 
     return (
-      <div style={containerStyle}>
+      <ListItem>
         <VideoInfo data={data} />
-        <div>
+        <ListItemControl>
           {
             currentPlayingVideoId === data.id.videoId ?
               null :
@@ -55,8 +50,8 @@ export default class PlayListItem extends Component {
           <DeleteButton
             isDeleting={this.state.isDeleting}
             onClick={this._handleDeleteClick} />
-        </div>
-      </div>
+        </ListItemControl>
+      </ListItem>
     )
   }
 }

@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { search, actions, sendAction } from '../actions'
 import SearchInput from '../components/SearchInput'
 import SearchResult from '../components/SearchResult'
+import { ColumnContainer, ColumnMain } from '../components/ColumnLayout'
 
 const { ADD_VIDEO } = actions
 
@@ -19,15 +20,17 @@ class Search extends Component {
     } = this.props
 
     return (
-      <div>
+      <ColumnContainer>
         <SearchInput
           isSearching={isSearching}
           onSearch={onSearch} />
-        <SearchResult
-          playlist={playlist}
-          data={searchResult}
-          onAdd={onAdd} />
-      </div>
+        <ColumnMain>
+          <SearchResult
+            playlist={playlist}
+            data={searchResult}
+            onAdd={onAdd} />
+        </ColumnMain>
+      </ColumnContainer>
     )
   }
 }

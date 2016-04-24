@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import { play, actions, sendAction } from '../actions'
 import PlayListItem from '../components/PlayListItem'
+import { ColumnContainer, ColumnMain } from '../components/ColumnLayout'
 
 const { DELETE_VIDEO, PLAY } = actions
 
@@ -16,20 +17,22 @@ class PlayList extends Component {
     } = this.props
 
     return (
-      <div>
+      <ColumnContainer>
         <h4>Your Playlist</h4>
-        {
-          playlist.map((data, index) =>
-            <PlayListItem
-              key={data.id.videoId}
-              index={index}
-              data={data}
-              currentPlayingVideoId={currentPlayingVideoId}
-              onSelect={onSelect}
-              onDelete={onDelete} />
-          )
-        }
-      </div>
+        <ColumnMain>
+          {
+            playlist.map((data, index) =>
+              <PlayListItem
+                key={data.id.videoId}
+                index={index}
+                data={data}
+                currentPlayingVideoId={currentPlayingVideoId}
+                onSelect={onSelect}
+                onDelete={onDelete} />
+            )
+          }
+        </ColumnMain>
+      </ColumnContainer>
     )
   }
 }
