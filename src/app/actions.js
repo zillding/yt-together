@@ -43,7 +43,9 @@ function setSearchError(error) {
 export const actions = {
   ADD_VIDEO: 'ADD_VIDEO',
   DELETE_VIDEO: 'DELETE_VIDEO',
-  PLAY: 'PLAY'
+  PLAY: 'PLAY',
+  PAUSE: 'PAUSE',
+  RESUME: 'RESUME',
 }
 
 export function setUpSocket() {
@@ -57,6 +59,10 @@ export function setUpSocket() {
           return dispatch(deleteVideo(msg.data))
         case actions.PLAY:
           return dispatch(play(msg.data))
+        case actions.PAUSE:
+          return dispatch(pause())
+        case actions.RESUME:
+          return dispatch(resume())
         default:
           return
       }
@@ -101,5 +107,21 @@ function deleteVideo(index) {
 }
 
 function play(videoId) {
-  return { type: 'PLAY', videoId }
+  return { type: actions.PLAY, videoId }
+}
+
+function pause() {
+  return { type: actions.PAUSE }
+}
+
+function resume() {
+  return { type: actions.RESUME }
+}
+
+export function playNext() {
+  return (dispatch, getState) => {
+    const { playlist, currentPlayingVideoId } = getState()
+    const nextVideoId = getNextVideoId(playlist, currentPlayingVideoId)
+    dispatch(sendAction(actions.PLAY, nextVideoId))
+  }
 }

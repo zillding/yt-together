@@ -5,7 +5,9 @@ import { actions } from './actions'
 const {
   ADD_VIDEO,
   DELETE_VIDEO,
-  PLAY
+  PLAY,
+  PAUSE,
+  RESUME,
 } = actions
 
 export function socket(state = null, action) {
@@ -94,8 +96,22 @@ export function playlist(state = List(), action) {
 
 export function currentPlayingVideoId(state = '', action) {
   switch (action.type) {
-    case 'PLAY':
+    case PLAY:
       return action.videoId
+    default:
+      return state
+  }
+}
+
+export function isPlaying(state = false, action) {
+  switch (action.type) {
+    case PLAY:
+      if (action.videoId) return true
+      return false
+    case PAUSE:
+      return false
+    case RESUME:
+      return true
     default:
       return state
   }
