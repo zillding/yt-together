@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { search, actions, sendAction } from '../actions'
+import { Actions, search, sendAction } from '../actions'
+const { ADD_VIDEO } = Actions
+
 import SearchInput from '../components/SearchInput'
 import SearchResult from '../components/SearchResult'
 import { ColumnContainer, ColumnMain } from '../components/ColumnLayout'
-
-const { ADD_VIDEO } = actions
 
 class Search extends Component {
   render() {

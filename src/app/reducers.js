@@ -1,14 +1,15 @@
 import { List } from 'immutable'
 import io from 'socket.io-client'
 
-import { actions } from './actions'
+import { Actions } from './actions'
 const {
+  SET_PLAYLIST,
   ADD_VIDEO,
   DELETE_VIDEO,
   PLAY,
   PAUSE,
   RESUME,
-} = actions
+} = Actions
 
 export function socket(state = null, action) {
   switch (action.type) {
@@ -85,6 +86,8 @@ export function isSelectingVideo(state = false, action) {
 
 export function playlist(state = List(), action) {
   switch (action.type) {
+    case SET_PLAYLIST:
+      return List(action.data)
     case ADD_VIDEO:
       return state.push(action.data)
     case DELETE_VIDEO:

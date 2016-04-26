@@ -3,6 +3,8 @@ import YouTube from 'react-youtube'
 
 export default class YoutubePlayer extends Component {
   componentWillReceiveProps({ isPlaying }) {
+    if (!this._player) return
+
     if (isPlaying) {
       this._player.playVideo()
     } else {

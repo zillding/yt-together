@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { play, actions, sendAction } from '../actions'
+import { play, Actions, sendAction } from '../actions'
+const { DELETE_VIDEO, PLAY } = Actions
+
 import PlayListItem from '../components/PlayListItem'
 import { ColumnContainer, ColumnMain } from '../components/ColumnLayout'
-
-const { DELETE_VIDEO, PLAY } = actions
 
 class PlayList extends Component {
   render() {

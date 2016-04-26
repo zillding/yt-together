@@ -1,8 +1,18 @@
 import { stringify } from 'qs'
 import io from 'socket.io-client'
 
-import { SEARCH_API, API_KEY } from './config'
+import { SEARCH_API, API_KEY, ACTIONS } from '../config'
 import { getVideoIndex, getNextVideoId } from './utils'
+
+export const Actions = ACTIONS
+const {
+  SET_PLAYLIST,
+  ADD_VIDEO,
+  DELETE_VIDEO,
+  PLAY,
+  PAUSE,
+  RESUME,
+} = Actions
 
 export function search(text) {
   return dispatch => {
@@ -40,28 +50,22 @@ function setSearchError(error) {
   return { type: 'SET_SEARCH_ERROR', error}
 }
 
-export const actions = {
-  ADD_VIDEO: 'ADD_VIDEO',
-  DELETE_VIDEO: 'DELETE_VIDEO',
-  PLAY: 'PLAY',
-  PAUSE: 'PAUSE',
-  RESUME: 'RESUME',
-}
-
 export function setUpSocket() {
   return (dispatch, getState) => {
     const socket = io()
     socket.on('action', msg => {
       switch (msg.type) {
-        case actions.ADD_VIDEO:
+        case SET_PLAYLIST:
+          return dispatch(setPlaylist(msg.data))
+        case ADD_VIDEO:
           return dispatch(addVideo(msg.data))
-        case actions.DELETE_VIDEO:
+        case DELETE_VIDEO:
           return dispatch(deleteVideo(msg.data))
-        case actions.PLAY:
+        case PLAY:
           return dispatch(play(msg.data))
-        case actions.PAUSE:
+        case PAUSE:
           return dispatch(pause())
-        case actions.RESUME:
+        case RESUME:
           return dispatch(resume())
         default:
           return
@@ -80,14 +84,18 @@ export function sendAction(action, data) {
   }
 }
 
+function setPlaylist(data) {
+  return { type: SET_PLAYLIST, data }
+}
+
 function addVideo(data) {
   return (dispatch, getState) => {
-    dispatch({ type: actions.ADD_VIDEO, data })
+    dispatch({ type: ADD_VIDEO, data })
 
     const { playlist, currentPlayingVideoId } = getState()
     if (playlist.size === 1) {
       const nextVideoId = getNextVideoId(playlist, currentPlayingVideoId)
-      dispatch(play(nextVideoId))
+      dispatch(sendAction(PLAY, nextVideoId))
     }
   }
 }
@@ -98,31 +106,31 @@ function deleteVideo(index) {
     const currentVideoIndex = getVideoIndex(playlist, currentPlayingVideoId)
     const nextVideoId = getNextVideoId(playlist, currentPlayingVideoId)
 
-    dispatch({ type: actions.DELETE_VIDEO, index })
+    dispatch({ type: DELETE_VIDEO, index })
 
     if (currentVideoIndex === index) {
-      dispatch(play(nextVideoId))
+      dispatch(sendAction(PLAY, nextVideoId))
     }
   }
 }
 
 function play(videoId) {
-  return { type: actions.PLAY, videoId }
+  return { type: PLAY, videoId }
 }
 
 function pause() {
-  return { type: actions.PAUSE }
+  return { type: PAUSE }
 }
 
 function resume() {
-  return { type: actions.RESUME }
+  return { type: RESUME }
 }
 
 export function playNext() {
   return (dispatch, getState) => {
     const { playlist, currentPlayingVideoId } = getState()
     const nextVideoId = getNextVideoId(playlist, currentPlayingVideoId)
-    dispatch(sendAction(actions.PLAY, nextVideoId))
+    dispatch(sendAction(PLAY, nextVideoId))
   }
 }
 

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { actions, sendAction, playNext } from '../actions'
-const { PAUSE, RESUME } = actions
+import { Actions, sendAction, playNext } from '../actions'
+const { PAUSE, RESUME } = Actions
 
 import YoutubePlayer from '../components/YoutubePlayer'
 import PlayerControl from '../components/PlayerControl'
