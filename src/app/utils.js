@@ -22,3 +22,13 @@ export function getNextVideoId(playlist, currentVideoId) {
 
   return ''
 }
+
+export function getPreviousVideoId(playlist, currentVideoId) {
+  if (!currentVideoId) {
+    return ''
+  }
+
+  const index = getVideoIndex(playlist, currentVideoId) - 1
+  if (index < 0) return ''
+  return playlist.get(index).id.videoId
+}

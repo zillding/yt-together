@@ -1,4 +1,4 @@
-import { List } from 'immutable'
+import { Map, List } from 'immutable'
 import io from 'socket.io-client'
 
 import { Actions } from './actions'
@@ -7,6 +7,8 @@ const {
   ADD_VIDEO,
   DELETE_VIDEO,
   PLAY,
+  PLAY_NEXT,
+  PLAY_PREVIOUS,
   PAUSE,
   RESUME,
 } = Actions
@@ -51,37 +53,17 @@ export function searchError(state = null, action) {
   }
 }
 
-export function isAddingVideo(state = false, action) {
-  switch (action.type) {
-    case `SEND_${ADD_VIDEO}`:
-      return true
-    case ADD_VIDEO:
-      return false
-    default:
-      return state
+export function isSendingMap(state = Map(), action) {
+  const { type } = action
+  let status = true
+  let act = ''
+  if (type.startsWith('SEND_')) {
+    act = type.substring(5)
+  } else {
+    status = false
+    act = type
   }
-}
-
-export function isDeletingVideo(state = false, action) {
-  switch (action.type) {
-    case `SEND_${DELETE_VIDEO}`:
-      return true
-    case DELETE_VIDEO:
-      return false
-    default:
-      return state
-  }
-}
-
-export function isSelectingVideo(state = false, action) {
-  switch (action.type) {
-    case `SEND_${PLAY}`:
-      return true
-    case PLAY:
-      return false
-    default:
-      return state
-  }
+  return state.set(act, status)
 }
 
 export function playlist(state = List(), action) {
@@ -101,6 +83,10 @@ export function currentPlayingVideoId(state = '', action) {
   switch (action.type) {
     case PLAY:
       return action.videoId
+    case PLAY_NEXT:
+      return action.nextVideoId
+    case PLAY_PREVIOUS:
+      return action.previousVideoId
     default:
       return state
   }

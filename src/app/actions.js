@@ -2,7 +2,7 @@ import { stringify } from 'qs'
 import io from 'socket.io-client'
 
 import { SEARCH_API, API_KEY, ACTIONS } from '../config'
-import { getVideoIndex, getNextVideoId } from './utils'
+import { getVideoIndex, getNextVideoId, getPreviousVideoId } from './utils'
 
 export const Actions = ACTIONS
 const {
@@ -10,6 +10,8 @@ const {
   ADD_VIDEO,
   DELETE_VIDEO,
   PLAY,
+  PLAY_NEXT,
+  PLAY_PREVIOUS,
   PAUSE,
   RESUME,
 } = Actions
@@ -63,6 +65,10 @@ export function setUpSocket() {
           return dispatch(deleteVideo(msg.data))
         case PLAY:
           return dispatch(play(msg.data))
+        case PLAY_NEXT:
+          return dispatch(playNext())
+        case PLAY_PREVIOUS:
+          return dispatch(playPrevious())
         case PAUSE:
           return dispatch(pause())
         case RESUME:
@@ -126,11 +132,19 @@ function resume() {
   return { type: RESUME }
 }
 
-export function playNext() {
+function playNext() {
   return (dispatch, getState) => {
     const { playlist, currentPlayingVideoId } = getState()
     const nextVideoId = getNextVideoId(playlist, currentPlayingVideoId)
-    dispatch(sendAction(PLAY, nextVideoId))
+    dispatch({ type: PLAY_NEXT, nextVideoId })
+  }
+}
+
+function playPrevious() {
+  return (dispatch, getState) => {
+    const { playlist, currentPlayingVideoId } = getState()
+    const previousVideoId = getPreviousVideoId(playlist, currentPlayingVideoId)
+    dispatch({ type: PLAY_PREVIOUS, previousVideoId })
   }
 }
 
