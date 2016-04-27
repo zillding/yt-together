@@ -17,6 +17,11 @@ const itemStyle = {
   position: 'relative',
 }
 
+const playerItemStyle = Object.assign({
+  minWidth: 863,
+  overflowY: 'auto',
+}, itemStyle)
+
 export default class Layout extends Component {
   render() {
     return (
@@ -24,7 +29,7 @@ export default class Layout extends Component {
         <div style={itemStyle}>
           <Search/>
         </div>
-        <div style={itemStyle}>
+        <div style={playerItemStyle}>
           <Player/>
         </div>
         <div style={itemStyle}>

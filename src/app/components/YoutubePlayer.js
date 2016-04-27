@@ -2,18 +2,8 @@ import React, { Component, PropTypes } from 'react'
 import YouTube from 'react-youtube'
 
 export default class YoutubePlayer extends Component {
-  componentWillReceiveProps({ isPlaying }) {
-    if (!this._player) return
-
-    if (isPlaying) {
-      this._player.playVideo()
-    } else {
-      this._player.pauseVideo()
-    }
-  }
-
   render() {
-    const { videoId, isPlaying, onEnd } = this.props
+    const { setPlayer, videoId, onEnd } = this.props
     const opts = {
       height: '480',
       width: '853',
@@ -27,7 +17,7 @@ export default class YoutubePlayer extends Component {
         <YouTube
           videoId={videoId}
           opts={opts}
-          onReady={e => this._player = e.target}
+          onReady={e => setPlayer(e.target)}
           onEnd={onEnd} />
       </div>
     )
@@ -35,7 +25,7 @@ export default class YoutubePlayer extends Component {
 }
 
 YoutubePlayer.propTypes = {
+  setPlayer: PropTypes.func.isRequired,
   videoId: PropTypes.string.isRequired,
-  isPlaying: PropTypes.bool.isRequired,
   onEnd: PropTypes.func.isRequired,
 }

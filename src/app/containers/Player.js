@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { Actions, sendAction } from '../actions'
+import { Actions, sendAction, setPlayer } from '../actions'
 const { PLAY_NEXT } = Actions
 
 import YoutubePlayer from '../components/YoutubePlayer'
@@ -12,12 +12,14 @@ export default class Player extends Component {
     const {
       currentPlayingVideoId,
       isPlaying,
+      setPlayer,
       onNext,
     } = this.props
 
     return (
       <div>
         <YoutubePlayer
+          setPlayer={setPlayer}
           videoId={currentPlayingVideoId}
           isPlaying={isPlaying}
           onEnd={onNext} />
@@ -36,6 +38,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    setPlayer: player => dispatch(setPlayer(player)),
     onNext: () => dispatch(sendAction(PLAY_NEXT)),
   }
 }

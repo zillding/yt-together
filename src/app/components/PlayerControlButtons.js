@@ -32,6 +32,14 @@ export const NextButton = ({ isSending, disabled, onNext }) => (
     onClick={onNext} />
 )
 
+export const SyncButton = ({ isSending, disabled, onSync }) => (
+  <Button
+    disabled={disabled}
+    isSending={isSending}
+    iconCn="refresh icon"
+    onClick={onSync} />
+)
+
 const Button = ({ isSending, disabled, iconCn, onClick }) => {
   const cn = isSending ?
     'ui disabled icon button loading' :
@@ -40,6 +48,7 @@ const Button = ({ isSending, disabled, iconCn, onClick }) => {
     <button
       className={cn}
       disabled={isSending || disabled}
+      style={{margin: 0}}
       onClick={onClick}>
       <i className={iconCn}></i>
     </button>

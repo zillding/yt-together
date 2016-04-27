@@ -14,6 +14,7 @@ const {
   PLAY_PREVIOUS,
   PAUSE,
   RESUME,
+  SYNC_TIME,
 } = Actions
 
 export function search(text) {
@@ -73,6 +74,8 @@ export function setUpSocket() {
           return dispatch(pause())
         case RESUME:
           return dispatch(resume())
+        case SYNC_TIME:
+          return dispatch(syncTime(msg.data))
         default:
           return
       }
@@ -125,11 +128,21 @@ function play(videoId) {
 }
 
 function pause() {
-  return { type: PAUSE }
+  return (dispatch, getState) => {
+    dispatch({ type: PAUSE })
+
+    const { player } = getState()
+    player.pauseVideo()
+  }
 }
 
 function resume() {
-  return { type: RESUME }
+  return (dispatch, getState) => {
+    dispatch({ type: RESUME })
+
+    const { player } = getState()
+    player.playVideo()
+  }
 }
 
 function playNext() {
@@ -148,6 +161,15 @@ function playPrevious() {
   }
 }
 
-export function toggleSearch() {
-  return { type: 'TOGGLE_SEARCH' }
+function syncTime(time) {
+  return (dispatch, getState) => {
+    const { player } = getState()
+    player.seekTo(time)
+
+    dispatch({ type: SYNC_TIME })
+  }
+}
+
+export function setPlayer(player) {
+  return { type: 'SET_PLAYER', player }
 }

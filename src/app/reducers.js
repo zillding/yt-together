@@ -13,6 +13,15 @@ const {
   RESUME,
 } = Actions
 
+export function player(state = null, action) {
+  switch (action.type) {
+    case 'SET_PLAYER':
+      return action.player
+    default:
+      return state
+  }
+}
+
 export function socket(state = null, action) {
   switch (action.type) {
     case 'SET_SOCKET':

@@ -14,6 +14,6 @@ open http://localhost:3000
 
 ## TODO
 
-+ Add socket server to sync
-+ Add auth
-+ Adjust UI
++ Add secret room
++ Adjust search layout
++ More control (volumn etc)
