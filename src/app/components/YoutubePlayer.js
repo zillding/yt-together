@@ -1,19 +1,27 @@
 import React, { Component, PropTypes } from 'react'
 import YouTube from 'react-youtube'
 
+const height = 720
+const width = 1280
+
+const containerStyle = {
+  height,
+  marginBottom: 10,
+}
+
 export default class YoutubePlayer extends Component {
   render() {
     const { setPlayer, videoId, onEnd } = this.props
     const opts = {
-      height: '480',
-      width: '853',
+      height,
+      width,
       playerVars: {
         autoplay: 1
       }
     }
 
     return (
-      <div>
+      <div style={containerStyle}>
         <YouTube
           videoId={videoId}
           opts={opts}

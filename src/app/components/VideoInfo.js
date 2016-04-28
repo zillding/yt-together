@@ -3,10 +3,19 @@ import React, { Component } from 'react'
 const containerStyle = {
   display: 'flex',
   alignItems: 'center',
+  flex: 1,
+}
+
+const imgPlaceholderStyle = {
+  height: 90,
+  backgroundColor: 'rgba(187, 187, 187, 0.85)',
+  marginRight: 10,
+  position: 'relative',
+  flex: '0 0 120px',
 }
 
 const imgStyle = {
-  marginRight: 10
+  position: 'absolute'
 }
 
 export default class VideoInfo extends Component {
@@ -16,10 +25,12 @@ export default class VideoInfo extends Component {
 
     return (
       <div style={containerStyle}>
-        <img
-          style={imgStyle}
-          src={snippet.thumbnails.default.url}
-          alt="thumbnail"/>
+        <div style={imgPlaceholderStyle}>
+          <img
+            style={imgStyle}
+            src={snippet.thumbnails.default.url}
+            alt="thumbnail"/>
+        </div>
         <div>{snippet.title}</div>
       </div>
     )

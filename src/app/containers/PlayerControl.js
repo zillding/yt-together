@@ -5,6 +5,7 @@ import { getNextVideoId, getPreviousVideoId } from '../utils'
 import { Actions, sendAction } from '../actions'
 const { PAUSE, RESUME, PLAY_NEXT, PLAY_PREVIOUS, SYNC_TIME } = Actions
 
+import { RowContainer } from '../components/RowLayout'
 import {
   PauseButton,
   ResumeButton,
@@ -13,13 +14,7 @@ import {
   SyncButton,
 } from '../components/PlayerControlButtons'
 
-const containerStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-}
-
-export default class PlayerControl extends Component {
+class PlayerControl extends Component {
   render() {
     const {
       player,
@@ -36,7 +31,7 @@ export default class PlayerControl extends Component {
     } = this.props
 
     return (
-      <div style={containerStyle}>
+      <RowContainer>
         <div className="ui buttons">
           {
             isPlaying ?
@@ -64,7 +59,7 @@ export default class PlayerControl extends Component {
             disabled={currentPlayingVideoId === ''}
             onSync={() => onSync(player.getCurrentTime())} />
         </div>
-      </div>
+      </RowContainer>
     )
   }
 }

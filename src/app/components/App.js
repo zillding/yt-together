@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
-import Layout from './Layout'
+import TitleBar from '../containers/TitleBar'
+import Layout from '../containers/Layout'
 
 const containerStyle = {
   position: 'fixed',
@@ -22,7 +23,7 @@ export default class App extends Component {
     return (
       <div style={containerStyle}>
         <div style={{padding: 10}}>
-          <h2>YouTube Together!</h2>
+          <TitleBar/>
         </div>
         <div style={mainStyle}>
           <Layout/>

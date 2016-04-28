@@ -173,3 +173,7 @@ function syncTime(time) {
 export function setPlayer(player) {
   return { type: 'SET_PLAYER', player }
 }
+
+export function toggleSearch() {
+  return { type: 'TOGGLE_SEARCH' }
+}

@@ -7,7 +7,7 @@ const { PLAY_NEXT } = Actions
 import YoutubePlayer from '../components/YoutubePlayer'
 import PlayerControl from './PlayerControl'
 
-export default class Player extends Component {
+class Player extends Component {
   render() {
     const {
       currentPlayingVideoId,
