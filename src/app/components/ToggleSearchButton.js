@@ -6,8 +6,8 @@ const ToggleSearchButton = ({ showSearch, onClick }) => {
       <button
         className="ui basic button"
         onClick={onClick}>
-        <i className="remove icon"></i>
-        Done Searching
+        <i className="list icon"></i>
+        Show Playlist
       </button>
     )
   }

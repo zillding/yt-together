@@ -18,6 +18,11 @@ const imgStyle = {
   position: 'absolute'
 }
 
+const titleStyle = {
+  fontWeight: 'bold',
+  color: '#215BE8',
+}
+
 export default class VideoInfo extends Component {
   render() {
     const { data } = this.props
@@ -31,7 +36,12 @@ export default class VideoInfo extends Component {
             src={snippet.thumbnails.default.url}
             alt="thumbnail"/>
         </div>
-        <div>{snippet.title}</div>
+        <div>
+          <div style={titleStyle}>{snippet.title}</div>
+          <small>by: <strong>{snippet.channelTitle}</strong></small>
+          <br/>
+          <small>at: {snippet.publishedAt}</small>
+        </div>
       </div>
     )
   }

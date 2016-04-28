@@ -22,12 +22,11 @@ const http = Server(app)
 const io = SocketIO(http)
 
 io.on('connection', socket => {
-  if (playlist.size > 0) {
-    socket.emit('action', {
-      type: SET_PLAYLIST,
-      data: playlist.toArray()
-    })
-  }
+  socket.emit('action', {
+    type: SET_PLAYLIST,
+    data: playlist.toArray()
+  })
+
   if (currentPlayingVideoId) {
     socket.emit('action', {
       type: PLAY,

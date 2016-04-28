@@ -117,6 +117,9 @@ export function isPlaying(state = false, action) {
 
 export function showSearch(state = false, action) {
   switch (action.type) {
+    case SET_PLAYLIST:
+      if (action.data.length === 0) return true
+      return false
     case 'TOGGLE_SEARCH':
       return !state
     default:

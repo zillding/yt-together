@@ -6,6 +6,7 @@ const width = 1280
 
 const containerStyle = {
   height,
+  width,
   marginBottom: 10,
 }
 
