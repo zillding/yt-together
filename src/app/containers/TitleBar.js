@@ -16,7 +16,12 @@ class TitleBar extends Component {
     return (
       <RowContainer>
         <div>
-          <h2>YouTube Together!</h2>
+          <h2 className="ui header">
+            <i className="youtube icon"></i>
+            <div className="content">
+              Watch YouTube Together! 🙌 😁
+            </div>
+          </h2>
         </div>
         <div>
           <ToggleSearchButton

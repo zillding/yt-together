@@ -1,56 +1,50 @@
 import React from 'react'
 
-export const PauseButton = ({ isSending, disabled, onPause }) => (
-  <Button
-    disabled={disabled}
-    isSending={isSending}
-    iconCn="pause icon"
-    onClick={onPause} />
-)
-
-export const ResumeButton = ({ isSending, disabled, onResume }) => (
-  <Button
-    disabled={disabled}
-    isSending={isSending}
-    iconCn="play icon"
-    onClick={onResume} />
-)
-
-export const PrevButton = ({ isSending, disabled, onPrevious }) => (
-  <Button
-    disabled={disabled}
-    isSending={isSending}
-    iconCn="step backward icon"
-    onClick={onPrevious} />
-)
-
-export const NextButton = ({ isSending, disabled, onNext }) => (
-  <Button
-    disabled={disabled}
-    isSending={isSending}
-    iconCn="step forward icon"
-    onClick={onNext} />
-)
-
-export const SyncButton = ({ isSending, disabled, onSync }) => (
-  <Button
-    disabled={disabled}
-    isSending={isSending}
-    iconCn="refresh icon"
-    onClick={onSync} />
-)
-
-const Button = ({ isSending, disabled, iconCn, onClick }) => {
+export const PrevButton = ({ isSending, disabled, onPrevious }) => {
   const cn = isSending ?
-    'ui disabled icon button loading' :
-    'ui icon button'
+    'ui disabled labeled icon button loading' :
+    'ui labeled icon button'
+
+  return (
+    <button
+      className={cn}
+      disabled={isSending || disabled}
+      onClick={onPrevious}>
+      <i className="step backward icon"></i>
+      Previous
+    </button>
+  )
+}
+
+export const NextButton = ({ isSending, disabled, onNext }) => {
+  const cn = isSending ?
+    'ui disabled right labeled icon button loading' :
+    'ui right labeled icon button'
+
+  return (
+    <button
+      className={cn}
+      disabled={isSending || disabled}
+      onClick={onNext}>
+      <i className="step forward icon"></i>
+      Next
+    </button>
+  )
+}
+
+export const SyncButton = ({ isSending, disabled, onSync }) => {
+  const cn = isSending ?
+    'ui disabled labeled icon button loading' :
+    'ui labeled icon button'
+
   return (
     <button
       className={cn}
       disabled={isSending || disabled}
       style={{margin: 0}}
-      onClick={onClick}>
-      <i className={iconCn}></i>
+      onClick={onSync}>
+      <i className="refresh icon"></i>
+      Sync Play Time
     </button>
   )
 }

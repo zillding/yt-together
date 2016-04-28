@@ -12,7 +12,14 @@ const containerStyle = {
 
 export default class YoutubePlayer extends Component {
   render() {
-    const { setPlayer, videoId, onEnd } = this.props
+    const {
+      setPlayer,
+      videoId,
+      onPause,
+      onResume,
+      onEnd,
+    } = this.props
+
     const opts = {
       height,
       width,
@@ -27,6 +34,8 @@ export default class YoutubePlayer extends Component {
           videoId={videoId}
           opts={opts}
           onReady={e => setPlayer(e.target)}
+          onPlay={onResume}
+          onPause={onPause}
           onEnd={onEnd} />
       </div>
     )
@@ -36,5 +45,7 @@ export default class YoutubePlayer extends Component {
 YoutubePlayer.propTypes = {
   setPlayer: PropTypes.func.isRequired,
   videoId: PropTypes.string.isRequired,
+  onPause: PropTypes.func.isRequired,
+  onResume: PropTypes.func.isRequired,
   onEnd: PropTypes.func.isRequired,
 }

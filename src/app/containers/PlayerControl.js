@@ -3,12 +3,10 @@ import { connect } from 'react-redux'
 
 import { getNextVideoId, getPreviousVideoId } from '../utils'
 import { Actions, sendAction } from '../actions'
-const { PAUSE, RESUME, PLAY_NEXT, PLAY_PREVIOUS, SYNC_TIME } = Actions
+const { PLAY_NEXT, PLAY_PREVIOUS, SYNC_TIME } = Actions
 
 import { RowContainer } from '../components/RowLayout'
 import {
-  PauseButton,
-  ResumeButton,
   PrevButton,
   NextButton,
   SyncButton,
@@ -22,9 +20,6 @@ class PlayerControl extends Component {
       currentPlayingVideoId,
       isPlaying,
       isSendingMap,
-      onClick,
-      onPause,
-      onResume,
       onNext,
       onPrevious,
       onSync,
@@ -32,18 +27,7 @@ class PlayerControl extends Component {
 
     return (
       <RowContainer>
-        <div className="ui buttons">
-          {
-            isPlaying ?
-              <PauseButton
-                isSending={isSendingMap.get('PAUSE')}
-                disabled={currentPlayingVideoId ? false : true}
-                onPause={onPause} /> :
-              <ResumeButton
-                isSending={isSendingMap.get('RESUME')}
-                disabled={currentPlayingVideoId ? false : true}
-                onResume={onResume} />
-          }
+        <div>
           <PrevButton
             isSending={isSendingMap.get('PLAY_PREVIOUS')}
             disabled={getPreviousVideoId(playlist, currentPlayingVideoId) === ''}
@@ -76,8 +60,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onPause: () => dispatch(sendAction(PAUSE)),
-    onResume: () => dispatch(sendAction(RESUME)),
     onNext: () => dispatch(sendAction(PLAY_NEXT)),
     onPrevious: () => dispatch(sendAction(PLAY_PREVIOUS)),
     onSync: time => dispatch(sendAction(SYNC_TIME, time)),
