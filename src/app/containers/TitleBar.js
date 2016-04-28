@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { toggleSearch } from '../actions'
 
 import { RowContainer } from '../components/RowLayout'
+import Brand from '../components/Brand'
 import ToggleSearchButton from '../components/ToggleSearchButton'
 
 class TitleBar extends Component {
@@ -16,12 +17,7 @@ class TitleBar extends Component {
     return (
       <RowContainer>
         <div>
-          <h2 className="ui header">
-            <i className="youtube icon"></i>
-            <div className="content">
-              Watch YouTube Together! 🙌 😁
-            </div>
-          </h2>
+          <Brand/>
         </div>
         <div>
           <ToggleSearchButton

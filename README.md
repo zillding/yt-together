@@ -15,5 +15,4 @@ open http://localhost:3000
 ## TODO
 
 + Add secret room
-+ Adjust search layout
-+ More control (volumn etc)
++ Make player responsive
