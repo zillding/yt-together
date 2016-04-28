@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import YouTube from 'react-youtube'
 
+import PlayerOverlay from './PlayerOverlay'
+
 const height = 720
 const width = 1280
 
@@ -8,6 +10,7 @@ const containerStyle = {
   height,
   width,
   marginBottom: 10,
+  position: 'relative',
 }
 
 export default class YoutubePlayer extends Component {
@@ -37,6 +40,7 @@ export default class YoutubePlayer extends Component {
           onPlay={onResume}
           onPause={onPause}
           onEnd={onEnd} />
+        {videoId ? null : <PlayerOverlay/>}
       </div>
     )
   }
