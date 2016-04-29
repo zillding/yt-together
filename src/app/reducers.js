@@ -12,6 +12,7 @@ const {
   PLAY_PREVIOUS,
   PAUSE,
   RESUME,
+  SYNC_TIME,
 } = Actions
 
 export function player(state = null, action) {
@@ -64,16 +65,38 @@ export function searchError(state = null, action) {
 }
 
 export function isSendingMap(state = Map(), action) {
+  const actionArray = [
+    ADD_VIDEO,
+    DELETE_VIDEO,
+    PLAY,
+    PLAY_NEXT,
+    PLAY_PREVIOUS,
+    PAUSE,
+    RESUME,
+    SYNC_TIME,
+  ]
+  const sendActionArray = actionArray.map(s => `SEND_${s}`)
   const { type } = action
-  let status = true
-  let act = ''
-  if (type.startsWith('SEND_')) {
-    act = type.substring(5)
-  } else {
-    status = false
-    act = type
+
+  if (actionArray.indexOf(type) >= 0) {
+    return state.set(type, false)
   }
-  return state.set(act, status)
+
+  if (sendActionArray.indexOf(type) >= 0) {
+    const act = type.substring(5)
+    return state.set(type, true)
+  }
+
+  return state
+}
+
+export function isInTheRoom(state = false, action) {
+  switch (action.type) {
+    case SET_USER_NUMBER:
+      return true
+    default:
+      return state
+  }
 }
 
 export function numberOfUsers(state = 0, action) {

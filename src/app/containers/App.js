@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import NotificationSystem from 'react-notification-system'
 
 import { sendUsername, setNotificationSystem } from '../actions'
 
 import TitleBar from './TitleBar'
 import Layout from './Layout'
+import Splash from '../components/Splash'
+import Notification from '../components/Notification'
 
 const containerStyle = {
   position: 'fixed',
@@ -22,30 +23,30 @@ const mainStyle = {
   position: 'relative',
 }
 
-class App extends Component {
-  componentDidMount() {
-    this.props.setNotificationSystem(this.refs.notification)
-    // TODO: Get user name
-    this.props.sendUsername('test')
-  }
-
-  render() {
+const App = ({ isInTheRoom, sendUsername, setNotificationSystem }) => {
+  if (!isInTheRoom) {
     return (
-      <div style={containerStyle}>
-        <div style={{padding: 10}}>
-          <TitleBar/>
-        </div>
-        <div style={mainStyle}>
-          <Layout/>
-        </div>
-        <NotificationSystem ref="notification"/>
-      </div>
+      <Splash onSubmit={sendUsername} />
     )
   }
+
+  return (
+    <div style={containerStyle}>
+      <div style={{padding: 10}}>
+        <TitleBar/>
+      </div>
+      <div style={mainStyle}>
+        <Layout/>
+      </div>
+      <Notification onReady={setNotificationSystem} />
+    </div>
+  )
 }
 
 const mapStateToProps = state => {
-  return {}
+  return {
+    isInTheRoom: state.isInTheRoom,
+  }
 }
 
 const mapDispatchToProps = dispatch => {
