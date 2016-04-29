@@ -91,6 +91,9 @@ export function setUpSocket() {
       }
     })
 
+    socket.on(EVENTS.WELCOME, msg => {
+      dispatch(setRoomName(msg))
+    })
     socket.on(EVENTS.NEW_USER, msg => {
       dispatch({ type: 'INCREMENT_USER_NUMBER' })
       dispatch(notify({
@@ -106,6 +109,10 @@ export function setUpSocket() {
       }))
     })
   }
+}
+
+function setRoomName(name) {
+  return { type: 'SET_ROOM_NAME', name }
 }
 
 function setUserNumber(numberOfUsers) {

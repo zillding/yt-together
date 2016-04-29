@@ -15,6 +15,7 @@ export const ACTIONS = {
 }
 
 export const EVENTS = {
+  WELCOME: 'welcome',
   NEW_USER: 'new user',
   LOST_USER: 'lost user',
   ACTION: 'action',

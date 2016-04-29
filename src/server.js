@@ -53,7 +53,8 @@ io.on('connection', socket => {
 
     socket.join(room)
 
-    // notify other users in the room
+    // notify users in the room
+    socket.emit(EVENTS.WELCOME, room)
     socket.broadcast.to(room).emit(EVENTS.NEW_USER, username)
 
     const field = 'numberOfUsers'

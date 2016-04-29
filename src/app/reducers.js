@@ -90,10 +90,10 @@ export function isSendingMap(state = Map(), action) {
   return state
 }
 
-export function isInTheRoom(state = false, action) {
+export function roomName(state = null, action) {
   switch (action.type) {
-    case SET_USER_NUMBER:
-      return true
+    case 'SET_ROOM_NAME':
+      return action.name
     default:
       return state
   }

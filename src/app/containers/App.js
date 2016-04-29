@@ -23,8 +23,8 @@ const mainStyle = {
   position: 'relative',
 }
 
-const App = ({ isInTheRoom, sendUsername, setNotificationSystem }) => {
-  const content = isInTheRoom ?
+const App = ({ roomName, sendUsername, setNotificationSystem }) => {
+  const content = roomName ?
     <div style={containerStyle}>
       <div style={{padding: 10}}>
         <TitleBar/>
@@ -45,7 +45,7 @@ const App = ({ isInTheRoom, sendUsername, setNotificationSystem }) => {
 
 const mapStateToProps = state => {
   return {
-    isInTheRoom: state.isInTheRoom,
+    roomName: state.roomName,
   }
 }
 

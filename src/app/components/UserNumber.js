@@ -1,7 +1,7 @@
 import React from 'react'
 
 const style = {
-  marginLeft: 20,
+  marginLeft: '1em',
 }
 
 const UserNumber = ({ number }) => (
