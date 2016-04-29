@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import TimeAgo from 'react-timeago'
 
 const containerStyle = {
   display: 'flex',
@@ -38,9 +39,9 @@ export default class VideoInfo extends Component {
         </div>
         <div>
           <div style={titleStyle}>{snippet.title}</div>
-          <small>by: <strong>{snippet.channelTitle}</strong></small>
+          <small>Uploaded by <strong>{snippet.channelTitle}</strong></small>
           <br/>
-          <small>at: {snippet.publishedAt}</small>
+          <small>Published <TimeAgo date={snippet.publishedAt} /></small>
         </div>
       </div>
     )
