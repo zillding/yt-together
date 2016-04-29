@@ -2,6 +2,7 @@ import express from 'express'
 import { Server } from 'http'
 import SocketIO from 'socket.io'
 import { List } from 'immutable'
+import md5 from 'md5'
 
 import { ACTIONS, EVENTS } from './config'
 const {
@@ -46,7 +47,7 @@ io.on('connection', socket => {
   socket.on(EVENTS.NEW_USER, name => {
     username = name.trim() || username
 
-    if (username === 'zill') {
+    if (md5(username) === 'e4c597f5239ff721e24e1e0b1e78307a') {
       room = 'secretRoom'
     }
 

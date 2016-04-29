@@ -12,6 +12,14 @@ npm start
 open http://localhost:3000
 ```
 
+## Features
+
++ Watch YouTube videos with your pals (synced using websocket)
++ Search YouTube videos
++ Preview search result
++ Add video to/delete video from a playlist
++ See current number of viewers
+
 ## TODO
 
 + Add label animation

@@ -29,7 +29,6 @@
     "cross-env": "^1.0.7",
     "debounce": "^1.0.0",
     "eventsource-polyfill": "^0.9.6",
-    "immutable": "^3.8.1",
     "qs": "^6.1.0",
     "react": "^15.0.1",
     "react-dom": "^15.0.1",
@@ -48,6 +47,8 @@
   },
   "dependencies": {
     "express": "^4.13.3",
+    "immutable": "^3.8.1",
+    "md5": "^2.1.0",
     "socket.io": "^1.4.5"
   }
 }
