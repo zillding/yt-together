@@ -9,8 +9,8 @@
     "build:babel": "cross-env NODE_ENV=production babel src -d lib --ignore 'app'",
     "build:webpack": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
     "build": "npm run clean && npm run build:babel && npm run build:webpack",
-    "dev": "babel-node devServer.js",
-    "start": "node lib/index.js"
+    "start": "babel-node devServer.js",
+    "now-start": "node lib/index.js"
   },
   "repository": {
     "type": "git",

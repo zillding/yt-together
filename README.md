@@ -19,7 +19,3 @@ open http://localhost:3000
 + Preview search result
 + Add video to/delete video from a playlist
 + See current number of viewers
-
-## TODO
-
-+ Add label animation
