@@ -29,6 +29,7 @@
     "cross-env": "^1.0.7",
     "debounce": "^1.0.0",
     "eventsource-polyfill": "^0.9.6",
+    "lodash": "^4.11.1",
     "qs": "^6.1.0",
     "react": "^15.0.1",
     "react-dom": "^15.0.1",
