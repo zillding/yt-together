@@ -1,19 +1,28 @@
 import React, { Component, PropTypes } from 'react'
+import debounce from 'debounce'
 import YouTube from 'react-youtube'
 
 import PlayerOverlay from './PlayerOverlay'
 
-const height = 720
-const width = 1280
-
-const containerStyle = {
-  height,
-  width,
-  marginBottom: 10,
-  position: 'relative',
-}
-
 export default class YoutubePlayer extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      width: getPlayerWidth(),
+    }
+  }
+
+  componentDidMount() {
+    window.onresize = debounce(this._handleResize.bind(this), 200)
+  }
+
+  _handleResize() {
+    const width = getPlayerWidth()
+    if (width !== this.state.width) {
+      this.setState({ width })
+    }
+  }
+
   render() {
     const {
       setPlayer,
@@ -22,6 +31,15 @@ export default class YoutubePlayer extends Component {
       onResume,
       onEnd,
     } = this.props
+    const { width } = this.state
+    const height = width === 1280 ? 720 : 480
+
+    const containerStyle = {
+      height,
+      width,
+      marginBottom: 10,
+      position: 'relative',
+    }
 
     const opts = {
       height,
@@ -52,4 +70,8 @@ YoutubePlayer.propTypes = {
   onPause: PropTypes.func.isRequired,
   onResume: PropTypes.func.isRequired,
   onEnd: PropTypes.func.isRequired,
+}
+
+function getPlayerWidth() {
+  return window.innerWidth > 1800 ? 1280 : 853
 }
