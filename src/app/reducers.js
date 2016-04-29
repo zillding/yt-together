@@ -3,6 +3,7 @@ import io from 'socket.io-client'
 
 import { Actions } from './actions'
 const {
+  SET_USER_NUMBER,
   SET_PLAYLIST,
   ADD_VIDEO,
   DELETE_VIDEO,
@@ -75,6 +76,19 @@ export function isSendingMap(state = Map(), action) {
   return state.set(act, status)
 }
 
+export function numberOfUsers(state = 0, action) {
+  switch (action.type) {
+    case SET_USER_NUMBER:
+      return action.number
+    case 'INCREMENT_USER_NUMBER':
+      return state + 1
+    case 'DECREMENT_USER_NUMBER':
+      return state - 1
+    default:
+      return state
+  }
+}
+
 export function playlist(state = List(), action) {
   switch (action.type) {
     case SET_PLAYLIST:
@@ -122,6 +136,15 @@ export function showSearch(state = false, action) {
       return false
     case 'TOGGLE_SEARCH':
       return !state
+    default:
+      return state
+  }
+}
+
+export function notificationSystem(state = null, action) {
+  switch (action.type) {
+    case 'SET_NOTIFICATION_SYSTEM':
+      return action.ns
     default:
       return state
   }

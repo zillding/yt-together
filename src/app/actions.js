@@ -1,11 +1,12 @@
 import { stringify } from 'qs'
 import io from 'socket.io-client'
 
-import { SEARCH_API, API_KEY, ACTIONS } from '../config'
+import { SEARCH_API, API_KEY, ACTIONS, EVENTS } from '../config'
 import { getVideoIndex, getNextVideoId, getPreviousVideoId } from './utils'
 
 export const Actions = ACTIONS
 const {
+  SET_USER_NUMBER,
   SET_PLAYLIST,
   ADD_VIDEO,
   DELETE_VIDEO,
@@ -54,10 +55,14 @@ function setSearchError(error) {
 }
 
 export function setUpSocket() {
-  return (dispatch, getState) => {
+  return dispatch => {
     const socket = io()
-    socket.on('action', msg => {
+    dispatch({ type: 'SET_SOCKET', socket })
+
+    socket.on(EVENTS.ACTION, msg => {
       switch (msg.type) {
+        case SET_USER_NUMBER:
+          return dispatch(setUserNumber(msg.data))
         case SET_PLAYLIST:
           return dispatch(setPlaylist(msg.data))
         case ADD_VIDEO:
@@ -80,7 +85,33 @@ export function setUpSocket() {
           return
       }
     })
-    dispatch({ type: 'SET_SOCKET', socket })
+
+    socket.on(EVENTS.NEW_USER, msg => {
+      dispatch({ type: 'INCREMENT_USER_NUMBER' })
+      dispatch(notify({
+        message: `User: ${msg} just joined!`,
+        level: 'success',
+      }))
+    })
+    socket.on(EVENTS.LOST_USER, msg => {
+      dispatch({ type: 'DECREMENT_USER_NUMBER' })
+      dispatch(notify({
+        message: `User: ${msg} has left.`,
+        level: 'info',
+      }))
+    })
+  }
+}
+
+function setUserNumber(numberOfUsers) {
+  const number = numberOfUsers < 0 ? 0 : numberOfUsers
+  return { type: SET_USER_NUMBER, number }
+}
+
+export function sendUsername(username) {
+  return (dispatch, getState) => {
+    const { socket } = getState()
+    socket.emit(EVENTS.NEW_USER, username)
   }
 }
 
@@ -89,7 +120,7 @@ export function sendAction(action, data) {
     dispatch({ type: `SEND_${action}` })
 
     const { socket } = getState()
-    socket.emit('action', { type: action, data })
+    socket.emit(EVENTS.ACTION, { type: action, data })
   }
 }
 
@@ -176,4 +207,18 @@ export function setPlayer(player) {
 
 export function toggleSearch() {
   return { type: 'TOGGLE_SEARCH' }
+}
+
+export function setNotificationSystem(ns) {
+  return { type: 'SET_NOTIFICATION_SYSTEM', ns }
+}
+
+function notify(msg) {
+  return (dispatch, getState) => {
+    const { notificationSystem } = getState()
+    const notification = Object.assign({
+      position: 'br'
+    }, msg)
+    notificationSystem.addNotification(notification)
+  }
 }

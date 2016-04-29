@@ -3,8 +3,9 @@ import { Server } from 'http'
 import SocketIO from 'socket.io'
 import { List } from 'immutable'
 
-import { ACTIONS } from './config'
+import { ACTIONS, EVENTS } from './config'
 const {
+  SET_USER_NUMBER,
   SET_PLAYLIST,
   ADD_VIDEO,
   DELETE_VIDEO,
@@ -15,6 +16,23 @@ const {
 // Global state data
 let playlist = List()
 let currentPlayingVideoId = ''
+const rooms = {
+  defaultRoom: {
+    playlist: List(),
+    currentPlayingVideoId: '',
+    numberOfUsers: 0,
+  },
+  secretRoom: {
+    playlist: List(),
+    currentPlayingVideoId: '',
+    numberOfUsers: 0,
+  }
+}
+
+// mutate the global state
+function updateData(room, field, data) {
+  rooms[room][field] = data
+}
 //////////////////////////////////////////////
 
 const app = express()
@@ -22,49 +40,80 @@ const http = Server(app)
 const io = SocketIO(http)
 
 io.on('connection', socket => {
-  socket.emit('action', {
-    type: SET_PLAYLIST,
-    data: playlist.toArray()
-  })
+  let room = 'defaultRoom'
+  let username = 'Super-Bat-Iron-Spider-Man'
 
-  if (currentPlayingVideoId) {
-    socket.emit('action', {
+  socket.on(EVENTS.NEW_USER, name => {
+    username = name.trim() || username
+
+    if (username === 'zill') {
+      room = 'secretRoom'
+    }
+
+    socket.join(room)
+
+    // notify other users in the room
+    socket.broadcast.to(room).emit(EVENTS.NEW_USER, username)
+
+    const field = 'numberOfUsers'
+    updateData(room, field, rooms[room][field] + 1)
+
+    // send initial data
+    const { playlist, currentPlayingVideoId, numberOfUsers } = rooms[room]
+    socket.emit(EVENTS.ACTION, {
+      type: SET_USER_NUMBER,
+      data: numberOfUsers
+    })
+    socket.emit(EVENTS.ACTION, {
+      type: SET_PLAYLIST,
+      data: playlist.toArray()
+    })
+    socket.emit(EVENTS.ACTION, {
       type: PLAY,
       data: currentPlayingVideoId
     })
-  }
+  })
 
-  socket.on('action', msg => {
-    io.emit('action', msg)
+  socket.on(EVENTS.ACTION, msg => {
+    io.in(room).emit(EVENTS.ACTION, msg)
 
     // store on server
+    let field = 'playlist'
     switch (msg.type) {
       case ADD_VIDEO:
-        return playlist = playlist.push(msg.data)
+        return updateData(room, field, rooms[room][field].push(msg.data))
       case DELETE_VIDEO:
-        return playlist = playlist.delete(msg.data)
+        return updateData(room, field, rooms[room][field].delete(msg.data))
       case PLAY:
-        return currentPlayingVideoId = msg.data
+        field = 'currentPlayingVideoId'
+        return updateData(room, field, msg.data)
       default:
         return
     }
   })
+
   socket.on('disconnect', () => {
-    // clean up playlist
-    if (io.engine.clientsCount === 0) {
-      playlist = playlist.clear()
-      currentPlayingVideoId = ''
+    const field = 'numberOfUsers'
+    updateData(room, field, rooms[room][field] - 1)
+
+    io.in(room).emit(EVENTS.LOST_USER, username)
+
+    // clean up data
+    if (rooms[room][field] === 0) {
+      updateData(room, 'playlist', List())
+      updateData(room, 'currentPlayingVideoId', '')
     }
   })
 })
 
-http.listen(3000, err => {
+const PORT = 3000
+http.listen(PORT, err => {
   if (err) {
     console.log(err)
     return
   }
 
-  console.log('Listening at http://localhost:3000')
+  console.log(`Listening on port: ${PORT}`)
 })
 
 export default app

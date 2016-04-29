@@ -7,7 +7,7 @@ import createLogger from 'redux-logger'
 
 import * as reducers from './reducers'
 import { setUpSocket } from './actions'
-import App from './components/App'
+import App from './containers/App'
 
 const logger = createLogger()
 const store = createStore(
