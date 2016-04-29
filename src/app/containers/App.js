@@ -24,13 +24,7 @@ const mainStyle = {
 }
 
 const App = ({ isInTheRoom, sendUsername, setNotificationSystem }) => {
-  if (!isInTheRoom) {
-    return (
-      <Splash onSubmit={sendUsername} />
-    )
-  }
-
-  return (
+  const content = isInTheRoom ?
     <div style={containerStyle}>
       <div style={{padding: 10}}>
         <TitleBar/>
@@ -38,6 +32,12 @@ const App = ({ isInTheRoom, sendUsername, setNotificationSystem }) => {
       <div style={mainStyle}>
         <Layout/>
       </div>
+    </div> :
+    <Splash onSubmit={sendUsername} />
+
+  return (
+    <div>
+      { content }
       <Notification onReady={setNotificationSystem} />
     </div>
   )

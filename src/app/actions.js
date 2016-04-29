@@ -60,6 +60,11 @@ export function setUpSocket() {
     dispatch({ type: 'SET_SOCKET', socket })
 
     socket.on(EVENTS.ACTION, msg => {
+      dispatch(notify({
+        message: `Action performed: ${msg.type}`,
+        level: 'info',
+      }))
+
       switch (msg.type) {
         case SET_USER_NUMBER:
           return dispatch(setUserNumber(msg.data))
@@ -97,7 +102,7 @@ export function setUpSocket() {
       dispatch({ type: 'DECREMENT_USER_NUMBER' })
       dispatch(notify({
         message: `User: ${msg} has left.`,
-        level: 'info',
+        level: 'warning',
       }))
     })
   }
