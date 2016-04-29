@@ -4,7 +4,7 @@ const ToggleSearchButton = ({ showSearch, onClick }) => {
   if (showSearch) {
     return (
       <button
-        className="ui basic button"
+        className="ui secondary button"
         onClick={onClick}>
         <i className="list icon"></i>
         Show Playlist
@@ -14,7 +14,7 @@ const ToggleSearchButton = ({ showSearch, onClick }) => {
 
   return (
     <button
-      className="ui basic button"
+      className="ui primary button"
       onClick={onClick}>
       <i className="search icon"></i>
       Search Videos
