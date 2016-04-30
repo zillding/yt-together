@@ -1,5 +1,6 @@
 import { stringify } from 'qs'
 import io from 'socket.io-client'
+import fetch from 'isomorphic-fetch'
 
 import { SEARCH_API, API_KEY, ACTIONS, EVENTS } from '../config'
 import { getVideoIndex, getNextVideoId, getPreviousVideoId } from './utils'
