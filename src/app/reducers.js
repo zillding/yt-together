@@ -1,18 +1,6 @@
 import { Map, List } from 'immutable'
 import io from 'socket.io-client'
 
-import { Actions } from './actions'
-const {
-  ADD_VIDEO,
-  DELETE_VIDEO,
-  PLAY,
-  PLAY_NEXT,
-  PLAY_PREVIOUS,
-  PAUSE,
-  RESUME,
-  SYNC_TIME,
-} = Actions
-
 export function player(state = null, action) {
   switch (action.type) {
     case 'SET_PLAYER':
@@ -85,14 +73,14 @@ export function searchError(state = null, action) {
 
 export function isSendingMap(state = Map(), action) {
   const actionArray = [
-    ADD_VIDEO,
-    DELETE_VIDEO,
-    PLAY,
-    PLAY_NEXT,
-    PLAY_PREVIOUS,
-    PAUSE,
-    RESUME,
-    SYNC_TIME,
+    'ADD_VIDEO',
+    'DELETE_VIDEO',
+    'PLAY',
+    'PLAY_NEXT',
+    'PLAY_PREVIOUS',
+    'PAUSE',
+    'RESUME',
+    'SYNC_TIME',
   ]
   const sendActionArray = actionArray.map(s => `SEND_${s}`)
   const { type } = action
@@ -129,10 +117,10 @@ export function roomState(state = defaultRoomState, action) {
     case 'DECREMENT_USER_NUMBER':
       return state.set('numberOfUsers',
         state.get('numberOfUsers') - 1)
-    case ADD_VIDEO:
+    case 'ADD_VIDEO':
       return state.set('playlist',
         state.get('playlist').push(action.data))
-    case DELETE_VIDEO:
+    case 'DELETE_VIDEO':
       return state.set('playlist',
         state.get('playlist').delete(action.index))
     default:
@@ -146,16 +134,16 @@ const defaultPlayerState = Map({
 })
 export function playerState(state = defaultPlayerState, action) {
   switch (action.type) {
-    case PLAY:
+    case 'PLAY':
       const { videoId } = action
       return state.set('videoId', videoId).set('isPlaying', videoId ? true : false)
-    case PLAY_NEXT:
+    case 'PLAY_NEXT':
       return state.set('videoId', action.nextVideoId)
-    case PLAY_PREVIOUS:
+    case 'PLAY_PREVIOUS':
       return state.set('videoId', action.previousVideoId)
-    case PAUSE:
+    case 'PAUSE':
       return state.set('isPlaying', false)
-    case RESUME:
+    case 'RESUME':
       return state.set('isPlaying', true)
     default:
       return state

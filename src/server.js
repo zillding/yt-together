@@ -4,15 +4,6 @@ import SocketIO from 'socket.io'
 import { List } from 'immutable'
 import md5 from 'md5'
 
-import { ACTIONS, EVENTS } from './config'
-const {
-  ADD_VIDEO,
-  DELETE_VIDEO,
-  PLAY,
-  PAUSE,
-  RESUME,
-} = ACTIONS
-
 //////////////////////////////////////////////
 // Global state data
 let playlist = List()
@@ -44,7 +35,7 @@ io.on('connection', socket => {
   let room = 'defaultRoom'
   let username = 'Super-Bat-Iron-Spider-Man'
 
-  socket.on(EVENTS.NEW_USER, name => {
+  socket.on('new user', name => {
     username = name.trim() || username
 
     if (md5(username) === 'e4c597f5239ff721e24e1e0b1e78307a') {
@@ -57,34 +48,34 @@ io.on('connection', socket => {
     updateData(room, field, rooms[room][field] + 1)
 
     // notify users in the room
-    socket.broadcast.to(room).emit(EVENTS.NEW_USER, username)
+    socket.broadcast.to(room).emit('new user', username)
 
     // send initial data
     const { playlist, currentPlayingVideoId, numberOfUsers } = rooms[room]
 
-    socket.emit(EVENTS.WELCOME, {
+    socket.emit('welcome', {
       room,
       numberOfUsers,
       playlist: playlist.toArray()
     })
 
-    socket.emit(EVENTS.ACTION, {
-      type: PLAY,
+    socket.emit('action', {
+      type: 'PLAY',
       data: currentPlayingVideoId
     })
   })
 
-  socket.on(EVENTS.ACTION, msg => {
-    io.in(room).emit(EVENTS.ACTION, msg)
+  socket.on('action', msg => {
+    io.in(room).emit('action', msg)
 
     // store on server
     let field = 'playlist'
     switch (msg.type) {
-      case ADD_VIDEO:
+      case 'ADD_VIDEO':
         return updateData(room, field, rooms[room][field].push(msg.data))
-      case DELETE_VIDEO:
+      case 'DELETE_VIDEO':
         return updateData(room, field, rooms[room][field].delete(msg.data))
-      case PLAY:
+      case 'PLAY':
         field = 'currentPlayingVideoId'
         return updateData(room, field, msg.data)
       default:
@@ -96,7 +87,7 @@ io.on('connection', socket => {
     const field = 'numberOfUsers'
     updateData(room, field, rooms[room][field] - 1)
 
-    io.in(room).emit(EVENTS.LOST_USER, username)
+    io.in(room).emit('lost user', username)
 
     // clean up data
     if (rooms[room][field] === 0) {

@@ -1,8 +1,7 @@
 import { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { play, Actions, sendAction } from '../actions'
-const { DELETE_VIDEO, PLAY } = Actions
+import { sendAction } from '../actions'
 
 import PlaylistItem from '../components/PlaylistItem'
 import { ColumnContainer, ColumnMain } from '../components/ColumnLayout'
@@ -48,8 +47,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSelect: videoId => dispatch(sendAction(PLAY, videoId)),
-    onDelete: index => dispatch(sendAction(DELETE_VIDEO, index)),
+    onSelect: videoId => dispatch(sendAction('PLAY', videoId)),
+    onDelete: index => dispatch(sendAction('DELETE_VIDEO', index)),
   }
 }
 

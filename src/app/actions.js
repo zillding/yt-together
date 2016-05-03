@@ -3,20 +3,8 @@ import { Map, List } from 'immutable'
 import io from 'socket.io-client'
 import fetch from 'isomorphic-fetch'
 
-import { SEARCH_API, API_KEY, ACTIONS, EVENTS } from '../config'
+import { SEARCH_API, API_KEY } from '../config'
 import { getVideoIndex, getNextVideoId, getPreviousVideoId } from './utils'
-
-export const Actions = ACTIONS
-const {
-  ADD_VIDEO,
-  DELETE_VIDEO,
-  PLAY,
-  PLAY_NEXT,
-  PLAY_PREVIOUS,
-  PAUSE,
-  RESUME,
-  SYNC_TIME,
-} = Actions
 
 export function search(text) {
   return dispatch => {
@@ -59,39 +47,39 @@ export function setUpSocket() {
     const socket = io()
     dispatch({ type: 'SET_SOCKET', socket })
 
-    socket.on(EVENTS.ACTION, msg => {
+    socket.on('action', msg => {
       dispatch(notify({
         message: `Action performed: ${msg.type}`,
         level: 'info',
       }))
 
       switch (msg.type) {
-        case ADD_VIDEO:
+        case 'ADD_VIDEO':
           return dispatch(addVideo(msg.data))
-        case DELETE_VIDEO:
+        case 'DELETE_VIDEO':
           return dispatch(deleteVideo(msg.data))
-        case PLAY:
+        case 'PLAY':
           return dispatch(play(msg.data))
-        case PLAY_NEXT:
+        case 'PLAY_NEXT':
           return dispatch(playNext())
-        case PLAY_PREVIOUS:
+        case 'PLAY_PREVIOUS':
           return dispatch(playPrevious())
-        case PAUSE:
+        case 'PAUSE':
           return dispatch(pause())
-        case RESUME:
+        case 'RESUME':
           return dispatch(resume())
-        case SYNC_TIME:
+        case 'SYNC_TIME':
           return dispatch(syncTime(msg.data))
         default:
           return
       }
     })
 
-    socket.on(EVENTS.WELCOME, msg => {
+    socket.on('welcome', msg => {
       dispatch(setRoomState(msg))
     })
 
-    socket.on(EVENTS.NEW_USER, msg => {
+    socket.on('new user', msg => {
       dispatch({ type: 'INCREMENT_USER_NUMBER' })
       dispatch(notify({
         message: `User: ${msg} just joined!`,
@@ -99,7 +87,7 @@ export function setUpSocket() {
       }))
     })
 
-    socket.on(EVENTS.LOST_USER, msg => {
+    socket.on('lost user', msg => {
       dispatch({ type: 'DECREMENT_USER_NUMBER' })
       dispatch(notify({
         message: `User: ${msg} has left.`,
@@ -116,7 +104,7 @@ function setRoomState(data) {
 export function sendUsername(username) {
   return (dispatch, getState) => {
     const { socket } = getState()
-    socket.emit(EVENTS.NEW_USER, username)
+    socket.emit('new user', username)
   }
 }
 
@@ -125,19 +113,19 @@ export function sendAction(action, data) {
     dispatch({ type: `SEND_${action}` })
 
     const { socket } = getState()
-    socket.emit(EVENTS.ACTION, { type: action, data })
+    socket.emit('action', { type: action, data })
   }
 }
 
 function addVideo(data) {
   return (dispatch, getState) => {
-    dispatch({ type: ADD_VIDEO, data })
+    dispatch({ type: 'ADD_VIDEO', data })
 
     const { roomState, playerState } = getState()
     const playlist = roomState.get('playlist')
     if (playlist.size === 1) {
       const nextVideoId = getNextVideoId(playlist, playerState.get('videoId'))
-      dispatch(sendAction(PLAY, nextVideoId))
+      dispatch(sendAction('PLAY', nextVideoId))
     }
   }
 }
@@ -150,24 +138,24 @@ function deleteVideo(index) {
     const currentVideoIndex = getVideoIndex(playlist, currentPlayingVideoId)
     const nextVideoId = getNextVideoId(playlist, currentPlayingVideoId)
 
-    dispatch({ type: DELETE_VIDEO, index })
+    dispatch({ type: 'DELETE_VIDEO', index })
 
     if (currentVideoIndex === index) {
-      dispatch(sendAction(PLAY, nextVideoId))
+      dispatch(sendAction('PLAY', nextVideoId))
     }
   }
 }
 
 function play(videoId) {
-  return { type: PLAY, videoId }
+  return { type: 'PLAY', videoId }
 }
 
 function pause() {
-  return { type: PAUSE }
+  return { type: 'PAUSE' }
 }
 
 function resume() {
-  return { type: RESUME }
+  return { type: 'RESUME' }
 }
 
 function playNext() {
@@ -177,7 +165,7 @@ function playNext() {
       roomState.get('playlist'),
       playerState.get('videoId')
     )
-    dispatch({ type: PLAY_NEXT, nextVideoId })
+    dispatch({ type: 'PLAY_NEXT', nextVideoId })
   }
 }
 
@@ -188,7 +176,7 @@ function playPrevious() {
       roomState.get('playlist'),
       playerState.get('videoId')
     )
-    dispatch({ type: PLAY_PREVIOUS, previousVideoId })
+    dispatch({ type: 'PLAY_PREVIOUS', previousVideoId })
   }
 }
 
@@ -197,7 +185,7 @@ function syncTime(time) {
     const { player } = getState()
     player.seekTo(time)
 
-    dispatch({ type: SYNC_TIME })
+    dispatch({ type: 'SYNC_TIME' })
   }
 }
 

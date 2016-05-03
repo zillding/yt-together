@@ -2,8 +2,7 @@ import { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { getNextVideoId, getPreviousVideoId } from '../utils'
-import { Actions, sendAction } from '../actions'
-const { PAUSE, RESUME, PLAY_NEXT, PLAY_PREVIOUS, SYNC_TIME } = Actions
+import { sendAction } from '../actions'
 
 import { RowContainer } from '../components/RowLayout'
 import {
@@ -75,11 +74,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onPause: () => dispatch(sendAction(PAUSE)),
-    onResume: () => dispatch(sendAction(RESUME)),
-    onNext: () => dispatch(sendAction(PLAY_NEXT)),
-    onPrevious: () => dispatch(sendAction(PLAY_PREVIOUS)),
-    onSync: time => dispatch(sendAction(SYNC_TIME, time)),
+    onPause: () => dispatch(sendAction('PAUSE')),
+    onResume: () => dispatch(sendAction('RESUME')),
+    onNext: () => dispatch(sendAction('PLAY_NEXT')),
+    onPrevious: () => dispatch(sendAction('PLAY_PREVIOUS')),
+    onSync: time => dispatch(sendAction('SYNC_TIME', time)),
   }
 }
 
