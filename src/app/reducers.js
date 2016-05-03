@@ -3,8 +3,6 @@ import io from 'socket.io-client'
 
 import { Actions } from './actions'
 const {
-  SET_USER_NUMBER,
-  SET_PLAYLIST,
   ADD_VIDEO,
   DELETE_VIDEO,
   PLAY,
@@ -44,8 +42,8 @@ export function notificationSystem(state = null, action) {
 
 export function showSearch(state = false, action) {
   switch (action.type) {
-    case SET_PLAYLIST:
-      if (action.data.length === 0) return true
+    case 'SET_ROOM_STATE':
+      if (action.data.playlist.length === 0) return true
       return false
     case 'TOGGLE_SEARCH':
       return !state
@@ -111,7 +109,12 @@ export function isSendingMap(state = Map(), action) {
   return state
 }
 
-export function roomState(state = Map(), action) {
+const defaultRoomState = Map({
+  room: '',
+  numberOfUsers: 0,
+  playlist: List(),
+})
+export function roomState(state = defaultRoomState, action) {
   switch (action.type) {
     case 'SET_ROOM_STATE':
       const { room, numberOfUsers, playlist } = action.data
@@ -137,28 +140,23 @@ export function roomState(state = Map(), action) {
   }
 }
 
-export function currentPlayingVideoId(state = '', action) {
+const defaultPlayerState = Map({
+  videoId: '',
+  isPlaying: false,
+})
+export function playerState(state = defaultPlayerState, action) {
   switch (action.type) {
     case PLAY:
-      return action.videoId
+      const { videoId } = action
+      return state.set('videoId', videoId).set('isPlaying', videoId ? true : false)
     case PLAY_NEXT:
-      return action.nextVideoId
+      return state.set('videoId', action.nextVideoId)
     case PLAY_PREVIOUS:
-      return action.previousVideoId
-    default:
-      return state
-  }
-}
-
-export function isPlaying(state = false, action) {
-  switch (action.type) {
-    case PLAY:
-      if (action.videoId) return true
-      return false
+      return state.set('videoId', action.previousVideoId)
     case PAUSE:
-      return false
+      return state.set('isPlaying', false)
     case RESUME:
-      return true
+      return state.set('isPlaying', true)
     default:
       return state
   }

@@ -129,18 +129,14 @@ export function sendAction(action, data) {
   }
 }
 
-function setPlaylist(data) {
-  return { type: SET_PLAYLIST, data }
-}
-
 function addVideo(data) {
   return (dispatch, getState) => {
     dispatch({ type: ADD_VIDEO, data })
 
-    const { roomState, currentPlayingVideoId } = getState()
+    const { roomState, playerState } = getState()
     const playlist = roomState.get('playlist')
     if (playlist.size === 1) {
-      const nextVideoId = getNextVideoId(playlist, currentPlayingVideoId)
+      const nextVideoId = getNextVideoId(playlist, playerState.get('videoId'))
       dispatch(sendAction(PLAY, nextVideoId))
     }
   }
@@ -148,8 +144,9 @@ function addVideo(data) {
 
 function deleteVideo(index) {
   return (dispatch, getState) => {
-    const { roomState, currentPlayingVideoId } = getState()
+    const { roomState, playerState } = getState()
     const playlist = roomState.get('playlist')
+    const currentPlayingVideoId = playerState.get('videoId')
     const currentVideoIndex = getVideoIndex(playlist, currentPlayingVideoId)
     const nextVideoId = getNextVideoId(playlist, currentPlayingVideoId)
 
@@ -175,16 +172,22 @@ function resume() {
 
 function playNext() {
   return (dispatch, getState) => {
-    const { roomState, currentPlayingVideoId } = getState()
-    const nextVideoId = getNextVideoId(roomState.get('playlist'), currentPlayingVideoId)
+    const { roomState, playerState } = getState()
+    const nextVideoId = getNextVideoId(
+      roomState.get('playlist'),
+      playerState.get('videoId')
+    )
     dispatch({ type: PLAY_NEXT, nextVideoId })
   }
 }
 
 function playPrevious() {
   return (dispatch, getState) => {
-    const { roomState, currentPlayingVideoId } = getState()
-    const previousVideoId = getPreviousVideoId(roomState.get('playlist'), currentPlayingVideoId)
+    const { roomState, playerState } = getState()
+    const previousVideoId = getPreviousVideoId(
+      roomState.get('playlist'),
+      playerState.get('videoId')
+    )
     dispatch({ type: PLAY_PREVIOUS, previousVideoId })
   }
 }

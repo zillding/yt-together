@@ -40,7 +40,7 @@ class PlayList extends Component {
 const mapStateToProps = state => {
   return {
     playlist: state.roomState.get('playlist'),
-    currentPlayingVideoId: state.currentPlayingVideoId,
+    currentPlayingVideoId: state.playerState.get('videoId'),
   }
 }
 

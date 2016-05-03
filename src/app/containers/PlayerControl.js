@@ -67,8 +67,8 @@ const mapStateToProps = state => {
   return {
     player: state.player,
     playlist: state.roomState.get('playlist'),
-    currentPlayingVideoId: state.currentPlayingVideoId,
-    isPlaying: state.isPlaying,
+    currentPlayingVideoId: state.playerState.get('videoId'),
+    isPlaying: state.playerState.get('isPlaying'),
     isSendingMap: state.isSendingMap,
   }
 }

@@ -14,7 +14,6 @@ class Player extends Component {
       currentPlayingVideoId,
       isPlaying,
       setPlayer,
-      onNext,
     } = this.props
 
     return (
@@ -34,8 +33,8 @@ class Player extends Component {
 const mapStateToProps = state => {
   return {
     player: state.player,
-    currentPlayingVideoId: state.currentPlayingVideoId,
-    isPlaying: state.isPlaying,
+    currentPlayingVideoId: state.playerState.get('videoId'),
+    isPlaying: state.playerState.get('isPlaying'),
   }
 }
 
