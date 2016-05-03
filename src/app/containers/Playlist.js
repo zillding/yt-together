@@ -4,10 +4,10 @@ import { connect } from 'react-redux'
 import { play, Actions, sendAction } from '../actions'
 const { DELETE_VIDEO, PLAY } = Actions
 
-import PlayListItem from '../components/PlayListItem'
+import PlaylistItem from '../components/PlaylistItem'
 import { ColumnContainer, ColumnMain } from '../components/ColumnLayout'
 
-class PlayList extends Component {
+class Playlist extends Component {
   render() {
     const {
       playlist,
@@ -24,7 +24,7 @@ class PlayList extends Component {
             playlist.size === 0 ?
               <Message/> :
               playlist.map((data, index) =>
-                <PlayListItem
+                <PlaylistItem
                   key={data.id.videoId}
                   index={index}
                   data={data}
@@ -56,7 +56,7 @@ const mapDispatchToProps = dispatch => {
 const C = connect(
   mapStateToProps,
   mapDispatchToProps
-)(PlayList)
+)(Playlist)
 
 export default C
 

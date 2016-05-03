@@ -3,7 +3,7 @@ import { Component, PropTypes } from 'react'
 import { ListItem, ListItemControl } from './ListItem'
 import VideoInfo from './VideoInfo'
 
-export default class PlayListItem extends Component {
+export default class PlaylistItem extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -56,7 +56,7 @@ export default class PlayListItem extends Component {
   }
 }
 
-PlayListItem.propTypes = {
+PlaylistItem.propTypes = {
   index: PropTypes.number.isRequired,
   data: PropTypes.object.isRequired,
   currentPlayingVideoId: PropTypes.string.isRequired,

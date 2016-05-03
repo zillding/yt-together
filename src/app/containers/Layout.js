@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import Search from './Search'
 import Player from './Player'
-import PlayList from './PlayList'
+import Playlist from './Playlist'
 
 const containerStyle = {
   display: 'flex',
@@ -37,7 +37,7 @@ const Layout = ({ showSearch }) => (
       {
         showSearch ?
           <Search/> :
-          <PlayList/>
+          <Playlist/>
       }
     </div>
   </div>
