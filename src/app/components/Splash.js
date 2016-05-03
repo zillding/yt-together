@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import GitHubForkRibbon from 'react-github-fork-ribbon'
 
 const containerStyle = {
   position: 'fixed',
@@ -56,6 +57,12 @@ export default class Splash extends Component {
 
     return (
       <div style={containerStyle}>
+        <GitHubForkRibbon
+          href="https://github.com/zillding/yt-together"
+          target="_blank"
+          position="right">
+          Fork me on GitHub
+        </GitHubForkRibbon>
         <div style={segmentStyle}>
           <div className="ui stacked segment">
             <Header/>
