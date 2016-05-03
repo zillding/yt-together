@@ -18,17 +18,19 @@ class PlayList extends Component {
 
     return (
       <ColumnContainer>
-        <h4>Your Playlist</h4>
+        <h4>Playlist</h4>
         <ColumnMain>
           {
-            playlist.map((data, index) =>
-              <PlayListItem
-                key={data.id.videoId}
-                index={index}
-                data={data}
-                currentPlayingVideoId={currentPlayingVideoId}
-                onSelect={onSelect}
-                onDelete={onDelete} />
+            playlist.size === 0 ?
+              <Message/> :
+              playlist.map((data, index) =>
+                <PlayListItem
+                  key={data.id.videoId}
+                  index={index}
+                  data={data}
+                  currentPlayingVideoId={currentPlayingVideoId}
+                  onSelect={onSelect}
+                  onDelete={onDelete} />
             )
           }
         </ColumnMain>
@@ -57,3 +59,15 @@ const C = connect(
 )(PlayList)
 
 export default C
+
+const Message = () => (
+  <div className="ui icon message">
+    <i className="youtube play icon"></i>
+    <div className="content">
+      <div className="header">
+        Current playlist is empty!
+      </div>
+      <p>Search and add some videos.</p>
+    </div>
+  </div>
+)
