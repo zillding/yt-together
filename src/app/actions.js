@@ -166,21 +166,11 @@ function play(videoId) {
 }
 
 function pause() {
-  return (dispatch, getState) => {
-    dispatch({ type: PAUSE })
-
-    const { player } = getState()
-    player.pauseVideo()
-  }
+  return { type: PAUSE }
 }
 
 function resume() {
-  return (dispatch, getState) => {
-    dispatch({ type: RESUME })
-
-    const { player } = getState()
-    player.playVideo()
-  }
+  return { type: RESUME }
 }
 
 function playNext() {

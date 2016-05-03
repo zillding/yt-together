@@ -75,13 +75,7 @@ io.on('connection', socket => {
   })
 
   socket.on(EVENTS.ACTION, msg => {
-    // prevent PAUSE and RESUME events fired twice at client
-    // side
-    if (msg.type === PAUSE || msg.type === RESUME) {
-      socket.broadcast.to(room).emit(EVENTS.ACTION, msg)
-    } else {
-      io.in(room).emit(EVENTS.ACTION, msg)
-    }
+    io.in(room).emit(EVENTS.ACTION, msg)
 
     // store on server
     let field = 'playlist'

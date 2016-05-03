@@ -16,6 +16,18 @@ export default class YoutubePlayer extends Component {
     window.onresize = debounce(this._handleResize.bind(this), 200)
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { player, isPlaying } = this.props
+
+    if (nextProps.isPlaying === this.props.isPlaying) return
+
+    if (nextProps.isPlaying) {
+      player.playVideo()
+    } else {
+      player.pauseVideo()
+    }
+  }
+
   _handleResize() {
     const width = getPlayerWidth()
     if (width !== this.state.width) {
@@ -27,9 +39,6 @@ export default class YoutubePlayer extends Component {
     const {
       setPlayer,
       videoId,
-      onPause,
-      onResume,
-      onEnd,
     } = this.props
     const { width } = this.state
     const height = width === 1280 ? 720 : 480
@@ -54,10 +63,7 @@ export default class YoutubePlayer extends Component {
         <YouTube
           videoId={videoId}
           opts={opts}
-          onReady={e => setPlayer(e.target)}
-          onPlay={onResume}
-          onPause={onPause}
-          onEnd={onEnd} />
+          onReady={e => setPlayer(e.target)} />
         {videoId ? null : <PlayerOverlay/>}
       </div>
     )
@@ -65,11 +71,10 @@ export default class YoutubePlayer extends Component {
 }
 
 YoutubePlayer.propTypes = {
-  setPlayer: PropTypes.func.isRequired,
+  player: PropTypes.object,
   videoId: PropTypes.string.isRequired,
-  onPause: PropTypes.func.isRequired,
-  onResume: PropTypes.func.isRequired,
-  onEnd: PropTypes.func.isRequired,
+  isPlaying: PropTypes.bool.isRequired,
+  setPlayer: PropTypes.func.isRequired,
 }
 
 function getPlayerWidth() {
