@@ -33,6 +33,27 @@ export function socket(state = null, action) {
   }
 }
 
+export function notificationSystem(state = null, action) {
+  switch (action.type) {
+    case 'SET_NOTIFICATION_SYSTEM':
+      return action.ns
+    default:
+      return state
+  }
+}
+
+export function showSearch(state = false, action) {
+  switch (action.type) {
+    case SET_PLAYLIST:
+      if (action.data.length === 0) return true
+      return false
+    case 'TOGGLE_SEARCH':
+      return !state
+    default:
+      return state
+  }
+}
+
 export function isSearching(state = false, action) {
   switch (action.type) {
     case 'SEARCH':
@@ -90,36 +111,27 @@ export function isSendingMap(state = Map(), action) {
   return state
 }
 
-export function roomName(state = null, action) {
+export function roomState(state = Map(), action) {
   switch (action.type) {
-    case 'SET_ROOM_NAME':
-      return action.name
-    default:
-      return state
-  }
-}
-
-export function numberOfUsers(state = 0, action) {
-  switch (action.type) {
-    case SET_USER_NUMBER:
-      return action.number
+    case 'SET_ROOM_STATE':
+      const { room, numberOfUsers, playlist } = action.data
+      return Map({
+        name: room,
+        numberOfUsers,
+        playlist: List(playlist)
+      })
     case 'INCREMENT_USER_NUMBER':
-      return state + 1
+      return state.set('numberOfUsers',
+        state.get('numberOfUsers') + 1)
     case 'DECREMENT_USER_NUMBER':
-      return state - 1
-    default:
-      return state
-  }
-}
-
-export function playlist(state = List(), action) {
-  switch (action.type) {
-    case SET_PLAYLIST:
-      return List(action.data)
+      return state.set('numberOfUsers',
+        state.get('numberOfUsers') - 1)
     case ADD_VIDEO:
-      return state.push(action.data)
+      return state.set('playlist',
+        state.get('playlist').push(action.data))
     case DELETE_VIDEO:
-      return state.delete(action.index)
+      return state.set('playlist',
+        state.get('playlist').delete(action.index))
     default:
       return state
   }
@@ -147,27 +159,6 @@ export function isPlaying(state = false, action) {
       return false
     case RESUME:
       return true
-    default:
-      return state
-  }
-}
-
-export function showSearch(state = false, action) {
-  switch (action.type) {
-    case SET_PLAYLIST:
-      if (action.data.length === 0) return true
-      return false
-    case 'TOGGLE_SEARCH':
-      return !state
-    default:
-      return state
-  }
-}
-
-export function notificationSystem(state = null, action) {
-  switch (action.type) {
-    case 'SET_NOTIFICATION_SYSTEM':
-      return action.ns
     default:
       return state
   }

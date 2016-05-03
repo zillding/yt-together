@@ -1,4 +1,5 @@
 import { stringify } from 'qs'
+import { Map, List } from 'immutable'
 import io from 'socket.io-client'
 import fetch from 'isomorphic-fetch'
 
@@ -7,8 +8,6 @@ import { getVideoIndex, getNextVideoId, getPreviousVideoId } from './utils'
 
 export const Actions = ACTIONS
 const {
-  SET_USER_NUMBER,
-  SET_PLAYLIST,
   ADD_VIDEO,
   DELETE_VIDEO,
   PLAY,
@@ -67,10 +66,6 @@ export function setUpSocket() {
       }))
 
       switch (msg.type) {
-        case SET_USER_NUMBER:
-          return dispatch(setUserNumber(msg.data))
-        case SET_PLAYLIST:
-          return dispatch(setPlaylist(msg.data))
         case ADD_VIDEO:
           return dispatch(addVideo(msg.data))
         case DELETE_VIDEO:
@@ -93,8 +88,9 @@ export function setUpSocket() {
     })
 
     socket.on(EVENTS.WELCOME, msg => {
-      dispatch(setRoomName(msg))
+      dispatch(setRoomState(msg))
     })
+
     socket.on(EVENTS.NEW_USER, msg => {
       dispatch({ type: 'INCREMENT_USER_NUMBER' })
       dispatch(notify({
@@ -102,6 +98,7 @@ export function setUpSocket() {
         level: 'success',
       }))
     })
+
     socket.on(EVENTS.LOST_USER, msg => {
       dispatch({ type: 'DECREMENT_USER_NUMBER' })
       dispatch(notify({
@@ -112,13 +109,8 @@ export function setUpSocket() {
   }
 }
 
-function setRoomName(name) {
-  return { type: 'SET_ROOM_NAME', name }
-}
-
-function setUserNumber(numberOfUsers) {
-  const number = numberOfUsers < 0 ? 0 : numberOfUsers
-  return { type: SET_USER_NUMBER, number }
+function setRoomState(data) {
+  return { type: 'SET_ROOM_STATE', data }
 }
 
 export function sendUsername(username) {
@@ -145,7 +137,8 @@ function addVideo(data) {
   return (dispatch, getState) => {
     dispatch({ type: ADD_VIDEO, data })
 
-    const { playlist, currentPlayingVideoId } = getState()
+    const { roomState, currentPlayingVideoId } = getState()
+    const playlist = roomState.get('playlist')
     if (playlist.size === 1) {
       const nextVideoId = getNextVideoId(playlist, currentPlayingVideoId)
       dispatch(sendAction(PLAY, nextVideoId))
@@ -155,7 +148,8 @@ function addVideo(data) {
 
 function deleteVideo(index) {
   return (dispatch, getState) => {
-    const { playlist, currentPlayingVideoId } = getState()
+    const { roomState, currentPlayingVideoId } = getState()
+    const playlist = roomState.get('playlist')
     const currentVideoIndex = getVideoIndex(playlist, currentPlayingVideoId)
     const nextVideoId = getNextVideoId(playlist, currentPlayingVideoId)
 
@@ -191,16 +185,16 @@ function resume() {
 
 function playNext() {
   return (dispatch, getState) => {
-    const { playlist, currentPlayingVideoId } = getState()
-    const nextVideoId = getNextVideoId(playlist, currentPlayingVideoId)
+    const { roomState, currentPlayingVideoId } = getState()
+    const nextVideoId = getNextVideoId(roomState.get('playlist'), currentPlayingVideoId)
     dispatch({ type: PLAY_NEXT, nextVideoId })
   }
 }
 
 function playPrevious() {
   return (dispatch, getState) => {
-    const { playlist, currentPlayingVideoId } = getState()
-    const previousVideoId = getPreviousVideoId(playlist, currentPlayingVideoId)
+    const { roomState, currentPlayingVideoId } = getState()
+    const previousVideoId = getPreviousVideoId(roomState.get('playlist'), currentPlayingVideoId)
     dispatch({ type: PLAY_PREVIOUS, previousVideoId })
   }
 }

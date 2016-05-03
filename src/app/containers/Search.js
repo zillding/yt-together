@@ -40,7 +40,7 @@ const mapStateToProps = state => {
     isSearching: state.isSearching,
     searchResult: state.searchResult,
     searchError: state.searchError,
-    playlist: state.playlist
+    playlist: state.roomState.get('playlist'),
   }
 }
 

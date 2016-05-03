@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 
 import { generateNonDupInt } from '../utils'
 
@@ -6,16 +6,26 @@ const style = {
   marginLeft: '1em',
 }
 
-const UserNumber = ({ number }) => (
-  <div
-    className={`ui large red label ${getClassName()}`}
-    style={style}>
-    <i className="users icon"></i>
-    {number}
-  </div>
-)
+export default class UserNumber extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.number !== this.props.number
+  }
 
-export default UserNumber
+  render() {
+    return (
+      <div
+        className={`ui large red label ${getClassName()}`}
+        style={style}>
+        <i className="users icon"></i>
+        {this.props.number}
+      </div>
+    )
+  }
+}
+
+UserNumber.propTypes = {
+  number: PropTypes.number.isRequired
+}
 
 function getClassName() {
   // generate a random non duplicated

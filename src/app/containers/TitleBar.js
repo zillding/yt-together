@@ -37,8 +37,8 @@ class TitleBar extends Component {
 
 const mapStateToProps = state => {
   return {
-    numberOfUsers: state.numberOfUsers,
-    roomName: state.roomName,
+    numberOfUsers: state.roomState.get('numberOfUsers'),
+    roomName: state.roomState.get('name'),
     showSearch: state.showSearch,
   }
 }

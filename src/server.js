@@ -6,8 +6,6 @@ import md5 from 'md5'
 
 import { ACTIONS, EVENTS } from './config'
 const {
-  SET_USER_NUMBER,
-  SET_PLAYLIST,
   ADD_VIDEO,
   DELETE_VIDEO,
   PLAY,
@@ -55,23 +53,21 @@ io.on('connection', socket => {
 
     socket.join(room)
 
-    // notify users in the room
-    socket.emit(EVENTS.WELCOME, room)
-    socket.broadcast.to(room).emit(EVENTS.NEW_USER, username)
-
     const field = 'numberOfUsers'
     updateData(room, field, rooms[room][field] + 1)
 
+    // notify users in the room
+    socket.broadcast.to(room).emit(EVENTS.NEW_USER, username)
+
     // send initial data
     const { playlist, currentPlayingVideoId, numberOfUsers } = rooms[room]
-    socket.emit(EVENTS.ACTION, {
-      type: SET_USER_NUMBER,
-      data: numberOfUsers
+
+    socket.emit(EVENTS.WELCOME, {
+      room,
+      numberOfUsers,
+      playlist: playlist.toArray()
     })
-    socket.emit(EVENTS.ACTION, {
-      type: SET_PLAYLIST,
-      data: playlist.toArray()
-    })
+
     socket.emit(EVENTS.ACTION, {
       type: PLAY,
       data: currentPlayingVideoId

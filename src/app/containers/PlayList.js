@@ -39,15 +39,15 @@ class PlayList extends Component {
 
 const mapStateToProps = state => {
   return {
-    playlist: state.playlist,
-    currentPlayingVideoId: state.currentPlayingVideoId
+    playlist: state.roomState.get('playlist'),
+    currentPlayingVideoId: state.currentPlayingVideoId,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     onSelect: videoId => dispatch(sendAction(PLAY, videoId)),
-    onDelete: index => dispatch(sendAction(DELETE_VIDEO, index))
+    onDelete: index => dispatch(sendAction(DELETE_VIDEO, index)),
   }
 }
 

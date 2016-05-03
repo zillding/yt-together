@@ -51,7 +51,7 @@ class PlayerControl extends Component {
 const mapStateToProps = state => {
   return {
     player: state.player,
-    playlist: state.playlist,
+    playlist: state.roomState.get('playlist'),
     currentPlayingVideoId: state.currentPlayingVideoId,
     isPlaying: state.isPlaying,
     isSendingMap: state.isSendingMap,

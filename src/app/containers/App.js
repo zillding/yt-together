@@ -45,7 +45,7 @@ const App = ({ roomName, sendUsername, setNotificationSystem }) => {
 
 const mapStateToProps = state => {
   return {
-    roomName: state.roomName,
+    roomName: state.roomState.get('name'),
   }
 }
 
