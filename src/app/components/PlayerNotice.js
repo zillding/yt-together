@@ -1,5 +1,3 @@
-import React from 'react'
-
 const style = {
   margin: '10px 0'
 }

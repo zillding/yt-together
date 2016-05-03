@@ -1,5 +1,3 @@
-import React from 'react'
-
 const overlayStyle = {
   position: 'absolute',
   top: 0,

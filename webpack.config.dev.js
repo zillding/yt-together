@@ -18,6 +18,9 @@ module.exports = {
     publicPath: '/dist/'
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      React: 'react',
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],

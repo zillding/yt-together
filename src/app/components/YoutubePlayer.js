@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import { Component, PropTypes } from 'react'
 import debounce from 'debounce'
 import YouTube from 'react-youtube'
 

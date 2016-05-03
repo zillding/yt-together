@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import { Component, PropTypes } from 'react'
 import GitHubForkRibbon from 'react-github-fork-ribbon'
 
 const containerStyle = {

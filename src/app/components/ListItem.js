@@ -1,5 +1,3 @@
-import React from 'react'
-
 const containerStyle = {
   display: 'flex',
   justifyContent: 'space-between',

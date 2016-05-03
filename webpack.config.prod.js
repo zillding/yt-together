@@ -12,6 +12,9 @@ module.exports = {
     publicPath: '/dist/'
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      React: 'react',
+    }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.DefinePlugin({
       'process.env': {

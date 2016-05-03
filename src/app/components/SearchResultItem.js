@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import { Component, PropTypes } from 'react'
 import YouTube from 'react-youtube'
 
 import { getVideoIndex } from '../utils'

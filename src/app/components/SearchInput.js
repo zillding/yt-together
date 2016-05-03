@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import { Component, PropTypes } from 'react'
 
 export default class SearchInput extends Component {
   constructor(props) {

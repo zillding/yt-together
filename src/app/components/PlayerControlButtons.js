@@ -1,5 +1,3 @@
-import React from 'react'
-
 export const ResumeButton = ({ isSending, disabled, onResume }) => {
   const cn = isSending ?
     'ui disabled labeled icon button loading' :

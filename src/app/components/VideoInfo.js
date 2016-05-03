@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import { Component, PropTypes } from 'react'
 import TimeAgo from 'react-timeago'
 
 const containerStyle = {
@@ -46,4 +46,8 @@ export default class VideoInfo extends Component {
       </div>
     )
   }
+}
+
+VideoInfo.propTypes = {
+  data: PropTypes.object,
 }

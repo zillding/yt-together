@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Brand = () => (
   <h2
     className="ui header"
