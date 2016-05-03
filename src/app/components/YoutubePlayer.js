@@ -19,7 +19,8 @@ export default class YoutubePlayer extends Component {
   componentWillReceiveProps(nextProps) {
     const { player, isPlaying } = this.props
 
-    if (nextProps.isPlaying === this.props.isPlaying) return
+    if (!player || nextProps.isPlaying === this.props.isPlaying)
+      return
 
     if (nextProps.isPlaying) {
       player.playVideo()
