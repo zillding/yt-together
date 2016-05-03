@@ -10,11 +10,11 @@ const containerStyle = {
   position: 'absolute',
   height: '100%',
   width: '100%',
+  padding: '0 10px',
 }
 
 const style = {
   overflowY: 'auto',
-  padding: '0 5px',
   position: 'relative',
   overflowY: 'auto',
 }
@@ -25,6 +25,7 @@ const playerItemStyle = Object.assign({
 
 const itemStyle = Object.assign({
   flex: 1,
+  marginLeft: 10,
 }, style)
 
 const Layout = ({ showSearch }) => (

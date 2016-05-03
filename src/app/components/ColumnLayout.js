@@ -3,7 +3,6 @@ import React from 'react'
 const containerStyle = {
   display: 'flex',
   flexDirection: 'column',
-  padding: '0 5px',
   position: 'absolute',
   top: 0,
   bottom: 0,
