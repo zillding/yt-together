@@ -1,10 +1,10 @@
 import { Component, PropTypes } from 'react'
 
-import SearchResultItem from './SearchResultItem'
+import SearchResultItem from './components/SearchResultItem'
 
 export default class SearchResult extends Component {
   render() {
-    const { playlist, data, isAddingVideo, onAdd } = this.props
+    const { data, getIsInPlaylist, onAdd } = this.props
 
     return (
       <div>
@@ -12,8 +12,8 @@ export default class SearchResult extends Component {
           data.map((o, index) =>
             <SearchResultItem
               key={index}
-              playlist={playlist}
               data={o}
+              isInPlaylist={getIsInPlaylist(o.id.videoId)}
               onAdd={onAdd} />
           )
         }
@@ -23,7 +23,7 @@ export default class SearchResult extends Component {
 }
 
 SearchResult.propTypes = {
-  playlist: PropTypes.object.isRequired,
   data: PropTypes.array.isRequired,
-  onAdd: PropTypes.func.isRequired
+  getIsInPlaylist: PropTypes.func.isRequired,
+  onAdd: PropTypes.func.isRequired,
 }

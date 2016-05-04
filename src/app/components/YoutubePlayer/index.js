@@ -2,7 +2,7 @@ import { Component, PropTypes } from 'react'
 import debounce from 'debounce'
 import YouTube from 'react-youtube'
 
-import PlayerOverlay from './PlayerOverlay'
+import PlayerOverlay from './components/PlayerOverlay'
 
 export default class YoutubePlayer extends Component {
   constructor(props) {

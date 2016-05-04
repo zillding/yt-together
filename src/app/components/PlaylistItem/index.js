@@ -1,7 +1,9 @@
 import { Component, PropTypes } from 'react'
 
-import { ListItem, ListItemControl } from './ListItem'
-import VideoInfo from './VideoInfo'
+import { ListItem, ListItemControl } from '../ListItem'
+import VideoInfo from '../VideoInfo'
+import PlayButton from './components/PlayButton'
+import DeleteButton from './components/DeleteButton'
 
 export default class PlaylistItem extends Component {
   constructor(props) {
@@ -62,33 +64,4 @@ PlaylistItem.propTypes = {
   currentPlayingVideoId: PropTypes.string.isRequired,
   onSelect: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired
-}
-
-const PlayButton = ({ isSelecting, onClick }) => {
-  const cn = isSelecting ?
-    'ui disabled icon button loading' :
-    'ui icon button'
-  return (
-    <button
-      className={cn}
-      disabled={isSelecting}
-      onClick={onClick}>
-      <i className="play icon"></i>
-    </button>
-  )
-}
-
-const DeleteButton = ({ isDeleting, onClick }) => {
-  const cn = isDeleting ?
-    'ui disabled negative icon button loading' :
-    'ui negative icon button'
-  return (
-    <button
-      className={cn}
-      disabled={isDeleting}
-      style={{margin: 0}}
-      onClick={onClick}>
-      <i className="remove icon"></i>
-    </button>
-  )
 }

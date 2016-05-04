@@ -2,6 +2,7 @@ import { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { search, sendAction } from '../actions'
+import { getVideoIndex } from '../utils'
 
 import SearchInput from '../components/SearchInput'
 import SearchResult from '../components/SearchResult'
@@ -25,8 +26,8 @@ class Search extends Component {
           onSearch={onSearch} />
         <ColumnMain>
           <SearchResult
-            playlist={playlist}
             data={searchResult}
+            getIsInPlaylist={videoId => getVideoIndex(playlist, videoId) !== -1}
             onAdd={onAdd} />
         </ColumnMain>
       </ColumnContainer>
