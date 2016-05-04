@@ -1,7 +1,7 @@
 import { Component, PropTypes } from 'react'
 
-import { ListItem, ListItemControl } from '../ListItem'
-import VideoInfo from '../VideoInfo'
+import { ListItem, ListItemControl } from 'components/ListItem'
+import VideoInfo from 'components/VideoInfo'
 import PlayButton from './components/PlayButton'
 import DeleteButton from './components/DeleteButton'
 

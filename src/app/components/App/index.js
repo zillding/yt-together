@@ -1,12 +1,12 @@
 import { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { sendUsername, setNotificationSystem } from '../actions'
+import { sendUsername, setNotificationSystem } from 'actions'
 
-import TitleBar from './TitleBar'
-import Layout from './Layout'
-import Splash from '../components/Splash'
-import Notification from '../components/Notification'
+import TitleBar from './components/TitleBar'
+import Layout from './components/Layout'
+import Splash from './components/Splash'
+import Notification from './components/Notification'
 
 const containerStyle = {
   position: 'fixed',

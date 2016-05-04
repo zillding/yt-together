@@ -1,6 +1,6 @@
 import { Component, PropTypes } from 'react'
 
-import { ListItem, ListItemControl } from '../../../ListItem'
+import { ListItem, ListItemControl } from 'components/ListItem'
 import Item from './components/Item'
 import PeekButton from './components/PeekButton'
 import AddButton from './components/AddButton'

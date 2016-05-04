@@ -1,11 +1,11 @@
 import { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { setPlayer } from '../actions'
+import { setPlayer } from 'actions'
 
-import YoutubePlayer from '../components/YoutubePlayer'
-import PlayerControl from './PlayerControl'
-import PlayerNotice from '../components/PlayerNotice'
+import YoutubePlayer from './components/YoutubePlayer'
+import PlayerControl from './components/PlayerControl'
+import PlayerNotice from './components/PlayerNotice'
 
 class Player extends Component {
   render() {

@@ -1,17 +1,17 @@
 import { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { getNextVideoId, getPreviousVideoId } from '../utils'
-import { sendAction } from '../actions'
+import { getNextVideoId, getPreviousVideoId } from 'utils'
+import { sendAction } from 'actions'
 
-import { RowContainer } from '../components/RowLayout'
+import { RowContainer } from 'components/RowLayout'
 import {
   PauseButton,
   ResumeButton,
   PrevButton,
   NextButton,
   SyncButton,
-} from '../components/PlayerControlButtons'
+} from './components/PlayerControlButtons'
 
 class PlayerControl extends Component {
   render() {

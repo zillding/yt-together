@@ -1,12 +1,12 @@
 import { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { search, sendAction } from '../actions'
-import { getVideoIndex } from '../utils'
+import { search, sendAction } from 'actions'
+import { getVideoIndex } from 'utils'
 
-import SearchInput from '../components/SearchInput'
-import SearchResult from '../components/SearchResult'
-import { ColumnContainer, ColumnMain } from '../components/ColumnLayout'
+import { ColumnContainer, ColumnMain } from 'components/ColumnLayout'
+import SearchInput from './components/SearchInput'
+import SearchResult from './components/SearchResult'
 
 class Search extends Component {
   render() {

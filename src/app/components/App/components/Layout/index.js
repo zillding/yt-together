@@ -1,9 +1,9 @@
 import { Component } from 'react'
 import { connect } from 'react-redux'
 
-import Search from './Search'
-import Player from './Player'
-import Playlist from './Playlist'
+import Search from './components/Search'
+import Player from './components/Player'
+import Playlist from './components/Playlist'
 
 const containerStyle = {
   display: 'flex',

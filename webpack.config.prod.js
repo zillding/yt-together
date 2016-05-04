@@ -27,6 +27,9 @@ module.exports = {
       }
     })
   ],
+  resolve: {
+    root: path.resolve('./src/app')
+  },
   module: {
     loaders: [{
       test: /\.js$/,

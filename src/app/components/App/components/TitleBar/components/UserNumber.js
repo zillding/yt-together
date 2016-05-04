@@ -1,6 +1,6 @@
 import { Component, PropTypes } from 'react'
 
-import { generateNonDupInt } from '../utils'
+import { generateNonDupInt } from 'utils'
 
 const style = {
   marginLeft: '1em',

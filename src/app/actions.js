@@ -3,7 +3,7 @@ import { Map, List } from 'immutable'
 import io from 'socket.io-client'
 import fetch from 'isomorphic-fetch'
 
-import { SEARCH_API, API_KEY } from '../config'
+import { SEARCH_API, API_KEY } from './config'
 import { getVideoIndex, getNextVideoId, getPreviousVideoId } from './utils'
 
 export function search(text) {

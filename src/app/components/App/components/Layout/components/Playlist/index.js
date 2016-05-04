@@ -1,10 +1,11 @@
 import { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { sendAction } from '../actions'
+import { sendAction } from 'actions'
 
-import PlaylistItem from '../components/PlaylistItem'
-import { ColumnContainer, ColumnMain } from '../components/ColumnLayout'
+import { ColumnContainer, ColumnMain } from 'components/ColumnLayout'
+import Message from './components/Message'
+import PlaylistItem from './components/PlaylistItem'
 
 class Playlist extends Component {
   render() {
@@ -58,15 +59,3 @@ const C = connect(
 )(Playlist)
 
 export default C
-
-const Message = () => (
-  <div className="ui icon message">
-    <i className="youtube play icon"></i>
-    <div className="content">
-      <div className="header">
-        Current playlist is empty!
-      </div>
-      <p>Search and add some videos.</p>
-    </div>
-  </div>
-)

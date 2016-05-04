@@ -1,13 +1,13 @@
 import { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { toggleSearch } from '../actions'
+import { toggleSearch } from 'actions'
 
-import { RowContainer } from '../components/RowLayout'
-import Brand from '../components/Brand'
-import UserNumber from '../components/UserNumber'
-import SecretTag from '../components/SecretTag'
-import ToggleSearchButton from '../components/ToggleSearchButton'
+import { RowContainer } from 'components/RowLayout'
+import Brand from './components/Brand'
+import UserNumber from './components/UserNumber'
+import SecretTag from './components/SecretTag'
+import ToggleSearchButton from './components/ToggleSearchButton'
 
 class TitleBar extends Component {
   render() {

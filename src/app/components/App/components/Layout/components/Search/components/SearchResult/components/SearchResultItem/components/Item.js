@@ -1,6 +1,6 @@
 import YouTube from 'react-youtube'
 
-import VideoInfo from '../../../../VideoInfo'
+import VideoInfo from 'components/VideoInfo'
 
 const Item = ({ peeking, data }) => {
   if (peeking) {
