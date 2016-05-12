@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/zillding/yt-together.png?label=ready&title=Ready)](https://waffle.io/zillding/yt-together)
 # YouTube Together
 
 A simple app to allow watching youtube together
