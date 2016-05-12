@@ -4,6 +4,8 @@ import SocketIO from 'socket.io'
 import { List } from 'immutable'
 import md5 from 'md5'
 
+import { findNumberOfUsersInRoom } from './utils'
+
 //////////////////////////////////////////////
 // Global state data
 let playlist = List()
@@ -12,12 +14,10 @@ const rooms = {
   defaultRoom: {
     playlist: List(),
     currentPlayingVideoId: '',
-    numberOfUsers: 0,
   },
   secretRoom: {
     playlist: List(),
     currentPlayingVideoId: '',
-    numberOfUsers: 0,
   }
 }
 
@@ -44,18 +44,15 @@ io.on('connection', socket => {
 
     socket.join(room)
 
-    const field = 'numberOfUsers'
-    updateData(room, field, rooms[room][field] + 1)
-
     // notify users in the room
     socket.broadcast.to(room).emit('new user', username)
 
     // send initial data
-    const { playlist, currentPlayingVideoId, numberOfUsers } = rooms[room]
+    const { playlist, currentPlayingVideoId } = rooms[room]
 
     socket.emit('welcome', {
       room,
-      numberOfUsers,
+      numberOfUsers: findNumberOfUsersInRoom(io, room),
       playlist: playlist.toArray()
     })
 
@@ -84,13 +81,10 @@ io.on('connection', socket => {
   })
 
   socket.on('disconnect', () => {
-    const field = 'numberOfUsers'
-    updateData(room, field, rooms[room][field] - 1)
-
     io.in(room).emit('lost user', username)
 
     // clean up data
-    if (rooms[room][field] === 0) {
+    if (findNumberOfUsersInRoom(io, room) === 0) {
       updateData(room, 'playlist', List())
       updateData(room, 'currentPlayingVideoId', '')
     }
