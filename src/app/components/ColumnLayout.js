@@ -8,8 +8,8 @@ const containerStyle = {
   right: 0,
 }
 
-export const ColumnContainer = ({ children }) => (
-  <div style={containerStyle}>
+export const ColumnContainer = ({ children, style }) => (
+  <div style={Object.assign({}, containerStyle, style)}>
     { children }
   </div>
 )
@@ -19,8 +19,8 @@ const mainStyle = {
   overflowY: 'auto',
 }
 
-export const ColumnMain = ({ children }) => (
-  <div style={mainStyle}>
+export const ColumnMain = ({ children, style }) => (
+  <div style={Object.assign({}, mainStyle, style)}>
     { children }
   </div>
 )

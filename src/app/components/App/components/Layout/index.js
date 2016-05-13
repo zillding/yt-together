@@ -7,6 +7,7 @@ import Playlist from './components/Playlist'
 
 const containerStyle = {
   display: 'flex',
+  justifyContent: 'center',
   position: 'absolute',
   height: '100%',
   width: '100%',
@@ -16,36 +17,36 @@ const containerStyle = {
 const style = {
   overflowY: 'auto',
   position: 'relative',
-  overflowY: 'auto',
 }
-
-const playerItemStyle = Object.assign({
-  flex: '0 0 content',
-}, style)
 
 const itemStyle = Object.assign({
   flex: 1,
   marginLeft: 10,
 }, style)
 
-const Layout = ({ showSearch }) => (
+const Layout = ({ showSidebar, showSearch }) => (
   <div style={containerStyle}>
-    <div style={playerItemStyle}>
+    <div style={style}>
       <Player/>
     </div>
-    <div style={itemStyle}>
-      {
-        showSearch ?
-          <Search/> :
-          <Playlist/>
-      }
-    </div>
+    {
+      showSidebar ?
+        <div style={itemStyle}>
+          {
+            showSearch ?
+              <Search/> :
+              <Playlist/>
+          }
+        </div> :
+        null
+    }
   </div>
 )
 
 const mapStateToProps = state => {
   return {
-    showSearch: state.showSearch
+    showSidebar: state.showSidebar,
+    showSearch: state.showSearch,
   }
 }
 

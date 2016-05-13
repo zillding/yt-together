@@ -20,7 +20,7 @@ export default class SearchInput extends Component {
     const cn = `ui fluid left icon input${isSearching ? ' loading' : ''}`
 
     return (
-      <div className={cn} style={{marginBottom: 10}}>
+      <div className={cn}>
         <input
           ref="input"
           type="text"

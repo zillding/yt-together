@@ -1,10 +1,10 @@
 const Username = ({ username }) => (
-  <div
-    className="ui large basic label"
-    style={{marginRight: 10}}>
+  <h4
+    className="ui header"
+    style={{margin: '0 15px'}}>
     <i className="user icon"></i>
     {username}
-  </div>
+  </h4>
 )
 
 export default Username

@@ -1,9 +1,12 @@
 import { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { sendAction } from 'actions'
+import { sendAction, toggleSearch } from 'actions'
 
 import { ColumnContainer, ColumnMain } from 'components/ColumnLayout'
+import { RowContainer } from 'components/RowLayout'
+import Header from './components/Header'
+import ShowSearch from './components/ShowSearch'
 import Message from './components/Message'
 import PlaylistItem from './components/PlaylistItem'
 
@@ -13,13 +16,17 @@ class Playlist extends Component {
       playlist,
       currentPlayingVideoId,
       isConnected,
+      toggleSearch,
       onSelect,
       onDelete,
     } = this.props
 
     return (
       <ColumnContainer>
-        <h4>Playlist</h4>
+        <RowContainer>
+          <Header/>
+          <ShowSearch onShow={toggleSearch} />
+        </RowContainer>
         <ColumnMain>
           {
             playlist.size === 0 ?
@@ -51,6 +58,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    toggleSearch: () => dispatch(toggleSearch()),
     onSelect: videoId => dispatch(sendAction('PLAY', videoId)),
     onDelete: index => dispatch(sendAction('DELETE_VIDEO', index)),
   }
