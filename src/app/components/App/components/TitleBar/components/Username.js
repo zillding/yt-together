@@ -1,11 +1,7 @@
-const style = {
-  marginRight: 10
-}
-
 const Username = ({ username }) => (
   <div
     className="ui large basic label"
-    style={style}>
+    style={{marginRight: 10}}>
     <i className="user icon"></i>
     {username}
   </div>

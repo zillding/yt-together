@@ -8,11 +8,13 @@ import Brand from './components/Brand'
 import UserNumber from './components/UserNumber'
 import SecretTag from './components/SecretTag'
 import Username from './components/Username'
+import Connecting from './components/Connecting'
 import ToggleSearchButton from './components/ToggleSearchButton'
 
 class TitleBar extends Component {
   render() {
     const {
+      isConnected,
       numberOfUsers,
       roomName,
       username,
@@ -27,6 +29,7 @@ class TitleBar extends Component {
           <UserNumber number={numberOfUsers} />
           { roomName === 'secretRoom' ? <SecretTag/> : null }
         </RowContainer>
+        { isConnected ? null : <Connecting/> }
         <RowContainer>
           <Username username={username} />
           <ToggleSearchButton
@@ -40,6 +43,7 @@ class TitleBar extends Component {
 
 const mapStateToProps = state => {
   return {
+    isConnected: state.isConnected,
     numberOfUsers: state.roomState.get('numberOfUsers'),
     roomName: state.roomState.get('name'),
     username: state.username,

@@ -43,9 +43,22 @@ function setSearchError(error) {
 }
 
 export function setUpSocket() {
-  return dispatch => {
+  return (dispatch, getState) => {
     const socket = io()
     dispatch({ type: 'SET_SOCKET', socket })
+
+    socket.on('connect', () => {
+      dispatch(setConnected(true))
+
+      const { username } = getState()
+      if (username) {
+        dispatch(sendUsername(username))
+        dispatch(notify({
+          message: 'Connect to server!',
+          level: 'success',
+        }))
+      }
+    })
 
     socket.on('action', msg => {
       dispatch(notify({
@@ -94,7 +107,19 @@ export function setUpSocket() {
         level: 'warning',
       }))
     })
+
+    socket.on('disconnect', () => {
+      dispatch(setConnected(false))
+      dispatch(notify({
+        message: 'Lost connection to server!',
+        level: 'error',
+      }))
+    })
   }
+}
+
+function setConnected(connected) {
+  return { type: 'SET_CONNECTED', connected }
 }
 
 function setRoomState(data) {

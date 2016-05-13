@@ -19,6 +19,15 @@ export function socket(state = null, action) {
   }
 }
 
+export function isConnected(state = false, action) {
+  switch(action.type) {
+    case 'SET_CONNECTED':
+      return action.connected
+    default:
+      return state
+  }
+}
+
 export function notificationSystem(state = null, action) {
   switch (action.type) {
     case 'SET_NOTIFICATION_SYSTEM':
