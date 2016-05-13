@@ -3,9 +3,7 @@ const Username = ({ username }) => (
     className="ui header"
     style={{margin: '0 15px'}}>
     <i className="user icon"></i>
-    <div className="content">
-      {username}
-    </div>
+    {username}
   </h4>
 )
 

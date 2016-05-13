@@ -23,24 +23,29 @@ const itemStyle = Object.assign({
   marginLeft: 10,
 }, style)
 
-const Layout = ({ showSearch }) => (
+const Layout = ({ showSidebar, showSearch }) => (
   <div style={containerStyle}>
     <div style={style}>
       <Player/>
     </div>
-    <div style={itemStyle}>
-      {
-        showSearch ?
-          <Search/> :
-          <Playlist/>
-      }
-    </div>
+    {
+      showSidebar ?
+        <div style={itemStyle}>
+          {
+            showSearch ?
+              <Search/> :
+              <Playlist/>
+          }
+        </div> :
+        null
+    }
   </div>
 )
 
 const mapStateToProps = state => {
   return {
-    showSearch: state.showSearch
+    showSidebar: state.showSidebar,
+    showSearch: state.showSearch,
   }
 }
 

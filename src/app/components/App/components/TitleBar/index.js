@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { toggleSearch } from 'actions'
+import { toggleSidebar, toggleSearch } from 'actions'
 
 import { RowContainer } from 'components/RowLayout'
 import Brand from './components/Brand'
@@ -9,7 +9,7 @@ import UserNumber from './components/UserNumber'
 import SecretTag from './components/SecretTag'
 import Username from './components/Username'
 import Connecting from './components/Connecting'
-import ToggleSearchButton from './components/ToggleSearchButton'
+import ToggleSidebarButton from './components/ToggleSidebarButton'
 
 class TitleBar extends Component {
   render() {
@@ -18,8 +18,8 @@ class TitleBar extends Component {
       numberOfUsers,
       roomName,
       username,
-      showSearch,
-      toggleSearch,
+      showSidebar,
+      toggleSidebar,
     } = this.props
 
     return (
@@ -32,9 +32,9 @@ class TitleBar extends Component {
         { isConnected ? null : <Connecting/> }
         <RowContainer>
           <Username username={username} />
-          <ToggleSearchButton
-            showSearch={showSearch}
-            onClick={toggleSearch} />
+          <ToggleSidebarButton
+            showSidebar={showSidebar}
+            onClick={toggleSidebar} />
         </RowContainer>
       </RowContainer>
     )
@@ -47,13 +47,13 @@ const mapStateToProps = state => {
     numberOfUsers: state.roomState.get('numberOfUsers'),
     roomName: state.roomState.get('name'),
     username: state.username,
-    showSearch: state.showSearch,
+    showSidebar: state.showSidebar,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    toggleSearch: () => dispatch(toggleSearch()),
+    toggleSidebar: () => dispatch(toggleSidebar()),
   }
 }
 

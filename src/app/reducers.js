@@ -37,6 +37,15 @@ export function notificationSystem(state = null, action) {
   }
 }
 
+export function showSidebar(state = true, action) {
+  switch (action.type) {
+    case 'TOGGLE_SIDEBAR':
+      return !state
+    default:
+      return state
+  }
+}
+
 export function showSearch(state = false, action) {
   switch (action.type) {
     case 'SET_ROOM_STATE':
