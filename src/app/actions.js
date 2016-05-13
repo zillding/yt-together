@@ -103,6 +103,8 @@ function setRoomState(data) {
 
 export function sendUsername(username) {
   return (dispatch, getState) => {
+    dispatch({ type: 'SEND_USERNAME', username })
+
     const { socket } = getState()
     socket.emit('new user', username)
   }

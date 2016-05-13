@@ -21,7 +21,6 @@ export default class Splash extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: false,
       error: false,
     }
     this._handleChange = this._handleChange.bind(this)
@@ -39,7 +38,6 @@ export default class Splash extends Component {
     e.preventDefault()
     const text = this.refs.input.value.trim()
     if (text) {
-      this.setState({ loading: true })
       this.props.onSubmit(text)
     } else {
       this.setState({ error: true })
@@ -47,10 +45,11 @@ export default class Splash extends Component {
   }
 
   render() {
-    const { loading, error } = this.state
-    const formCN = loading ?
+    const formCN = this.props.isSendingUsername ?
       'ui large loading form' :
       'ui large form'
+
+    const { error } = this.state
     const fieldCN = error ?
       'field error' :
       'field'
@@ -64,7 +63,7 @@ export default class Splash extends Component {
           Fork me on GitHub
         </GitHubForkRibbon>
         <div style={segmentStyle}>
-          <div className="ui stacked segment">
+          <div className="ui segment">
             <Header/>
             <form
               className={formCN}
@@ -96,7 +95,8 @@ export default class Splash extends Component {
 }
 
 Splash.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+  isSendingUsername: PropTypes.bool,
+  onSubmit: PropTypes.func.isRequired,
 }
 
 const Header = () => (

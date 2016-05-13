@@ -72,7 +72,15 @@ export function searchError(state = null, action) {
 }
 
 export function isSendingMap(state = Map(), action) {
+  const { type } = action
+
+  if (type === 'SET_ROOM_STATE') {
+    return state.set('USERNAME', false)
+  }
+
+  // send actions
   const actionArray = [
+    'USERNAME',
     'ADD_VIDEO',
     'DELETE_VIDEO',
     'PLAY',
@@ -83,7 +91,6 @@ export function isSendingMap(state = Map(), action) {
     'SYNC_TIME',
   ]
   const sendActionArray = actionArray.map(s => `SEND_${s}`)
-  const { type } = action
 
   if (actionArray.indexOf(type) >= 0) {
     return state.set(type, false)
@@ -91,7 +98,7 @@ export function isSendingMap(state = Map(), action) {
 
   if (sendActionArray.indexOf(type) >= 0) {
     const act = type.substring(5)
-    return state.set(type, true)
+    return state.set(act, true)
   }
 
   return state

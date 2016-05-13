@@ -23,7 +23,7 @@ const mainStyle = {
   position: 'relative',
 }
 
-const App = ({ roomName, sendUsername, setNotificationSystem }) => {
+const App = ({ roomName, isSendingUsername, sendUsername, setNotificationSystem }) => {
   const content = roomName ?
     <div style={containerStyle}>
       <div style={{padding: 10}}>
@@ -33,7 +33,9 @@ const App = ({ roomName, sendUsername, setNotificationSystem }) => {
         <Layout/>
       </div>
     </div> :
-    <Splash onSubmit={sendUsername} />
+    <Splash
+      isSendingUsername={isSendingUsername}
+      onSubmit={sendUsername} />
 
   return (
     <div>
@@ -46,6 +48,7 @@ const App = ({ roomName, sendUsername, setNotificationSystem }) => {
 const mapStateToProps = state => {
   return {
     roomName: state.roomState.get('name'),
+    isSendingUsername: state.isSendingMap.get('USERNAME'),
   }
 }
 
