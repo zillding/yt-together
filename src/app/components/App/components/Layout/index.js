@@ -7,6 +7,7 @@ import Playlist from './components/Playlist'
 
 const containerStyle = {
   display: 'flex',
+  justifyContent: 'center',
   position: 'absolute',
   height: '100%',
   width: '100%',
