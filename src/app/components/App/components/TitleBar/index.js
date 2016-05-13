@@ -7,6 +7,7 @@ import { RowContainer } from 'components/RowLayout'
 import Brand from './components/Brand'
 import UserNumber from './components/UserNumber'
 import SecretTag from './components/SecretTag'
+import Username from './components/Username'
 import ToggleSearchButton from './components/ToggleSearchButton'
 
 class TitleBar extends Component {
@@ -14,6 +15,7 @@ class TitleBar extends Component {
     const {
       numberOfUsers,
       roomName,
+      username,
       showSearch,
       toggleSearch,
     } = this.props
@@ -25,11 +27,12 @@ class TitleBar extends Component {
           <UserNumber number={numberOfUsers} />
           { roomName === 'secretRoom' ? <SecretTag/> : null }
         </RowContainer>
-        <div>
+        <RowContainer>
+          <Username username={username} />
           <ToggleSearchButton
             showSearch={showSearch}
             onClick={toggleSearch} />
-        </div>
+        </RowContainer>
       </RowContainer>
     )
   }
@@ -39,6 +42,7 @@ const mapStateToProps = state => {
   return {
     numberOfUsers: state.roomState.get('numberOfUsers'),
     roomName: state.roomState.get('name'),
+    username: state.username,
     showSearch: state.showSearch,
   }
 }

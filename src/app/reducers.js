@@ -104,6 +104,15 @@ export function isSendingMap(state = Map(), action) {
   return state
 }
 
+export function username(state = '', action) {
+  switch (action.type) {
+    case 'SEND_USERNAME':
+      return action.username
+    default:
+      return state
+  }
+}
+
 const defaultRoomState = Map({
   room: '',
   numberOfUsers: 0,
