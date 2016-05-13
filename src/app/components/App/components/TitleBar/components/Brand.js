@@ -6,7 +6,7 @@ const Brand = () => (
     <div className="content">
       Watch YouTube Together! 🙌 😁
       <div className="sub header">
-        Made with <i className="heart icon"></i> by
+        <i className="code icon"></i> with <i className="heart icon"></i> by
         <a
           href="https://github.com/zillding"
           style={{marginLeft: 5}}>
