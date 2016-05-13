@@ -114,6 +114,7 @@ export function setUpSocket() {
         message: 'Lost connection to server!',
         level: 'error',
       }))
+      dispatch(pause())
     })
   }
 }
