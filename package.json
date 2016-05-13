@@ -27,7 +27,6 @@
     "babel-preset-react": "^6.3.13",
     "babel-preset-react-hmre": "^1.1.1",
     "cross-env": "^1.0.7",
-    "debounce": "^1.0.0",
     "eventsource-polyfill": "^0.9.6",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.11.1",
