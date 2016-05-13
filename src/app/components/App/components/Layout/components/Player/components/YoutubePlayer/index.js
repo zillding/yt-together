@@ -1,5 +1,4 @@
 import { Component, PropTypes } from 'react'
-import debounce from 'debounce'
 import YouTube from 'react-youtube'
 
 import PlayerOverlay from './components/PlayerOverlay'
@@ -12,10 +11,6 @@ export default class YoutubePlayer extends Component {
     }
   }
 
-  componentDidMount() {
-    window.onresize = debounce(this._handleResize.bind(this), 200)
-  }
-
   componentWillReceiveProps(nextProps) {
     const { player, isPlaying } = this.props
 
@@ -26,13 +21,6 @@ export default class YoutubePlayer extends Component {
       player.playVideo()
     } else {
       player.pauseVideo()
-    }
-  }
-
-  _handleResize() {
-    const width = getPlayerWidth()
-    if (width !== this.state.width) {
-      this.setState({ width })
     }
   }
 
