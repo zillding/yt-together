@@ -14,7 +14,7 @@ export default class UserNumber extends Component {
   render() {
     return (
       <div
-        className={`ui large red label ${getClassName()}`}
+        className={`ui large red circular label ${getClassName()}`}
         style={style}>
         <i className="users icon"></i>
         {this.props.number}
