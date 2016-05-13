@@ -12,6 +12,7 @@ class Playlist extends Component {
     const {
       playlist,
       currentPlayingVideoId,
+      isConnected,
       onSelect,
       onDelete,
     } = this.props
@@ -29,6 +30,7 @@ class Playlist extends Component {
                   index={index}
                   data={data}
                   currentPlayingVideoId={currentPlayingVideoId}
+                  isConnected={isConnected}
                   onSelect={onSelect}
                   onDelete={onDelete} />
             )
@@ -43,6 +45,7 @@ const mapStateToProps = state => {
   return {
     playlist: state.roomState.get('playlist'),
     currentPlayingVideoId: state.playerState.get('videoId'),
+    isConnected: state.isConnected,
   }
 }
 

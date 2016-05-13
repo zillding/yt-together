@@ -36,7 +36,7 @@ export default class PlaylistItem extends Component {
   }
 
   render() {
-    const { data, currentPlayingVideoId } = this.props
+    const { data, currentPlayingVideoId, isConnected } = this.props
 
     return (
       <ListItem>
@@ -47,10 +47,12 @@ export default class PlaylistItem extends Component {
               null :
               <PlayButton
                 isSelecting={this.state.isSelecting}
+                disabled={!isConnected}
                 onClick={this._handlePlayClick} />
           }
           <DeleteButton
             isDeleting={this.state.isDeleting}
+            disabled={!isConnected}
             onClick={this._handleDeleteClick} />
         </ListItemControl>
       </ListItem>
@@ -62,6 +64,7 @@ PlaylistItem.propTypes = {
   index: PropTypes.number.isRequired,
   data: PropTypes.object.isRequired,
   currentPlayingVideoId: PropTypes.string.isRequired,
+  isConnected: PropTypes.bool.isRequired,
   onSelect: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired
 }

@@ -15,6 +15,7 @@ class Search extends Component {
       searchResult,
       searchError,
       playlist,
+      isConnected,
       onSearch,
       onAdd,
     } = this.props
@@ -28,6 +29,7 @@ class Search extends Component {
           <SearchResult
             data={searchResult}
             getIsInPlaylist={videoId => getVideoIndex(playlist, videoId) !== -1}
+            isConnected={isConnected}
             onAdd={onAdd} />
         </ColumnMain>
       </ColumnContainer>
@@ -41,6 +43,7 @@ const mapStateToProps = state => {
     searchResult: state.searchResult,
     searchError: state.searchError,
     playlist: state.roomState.get('playlist'),
+    isConnected: state.isConnected,
   }
 }
 

@@ -21,6 +21,7 @@ class PlayerControl extends Component {
       currentPlayingVideoId,
       isPlaying,
       isSendingMap,
+      isConnected,
       onPause,
       onResume,
       onNext,
@@ -35,26 +36,26 @@ class PlayerControl extends Component {
             isPlaying ?
               <PauseButton
                 isSending={isSendingMap.get('PAUSE')}
-                disabled={currentPlayingVideoId === ''}
+                disabled={!isConnected || currentPlayingVideoId === ''}
                 onPause={onPause} /> :
               <ResumeButton
                 isSending={isSendingMap.get('RESUME')}
-                disabled={currentPlayingVideoId === ''}
+                disabled={!isConnected || currentPlayingVideoId === ''}
                 onResume={onResume} />
           }
           <PrevButton
             isSending={isSendingMap.get('PLAY_PREVIOUS')}
-            disabled={getPreviousVideoId(playlist, currentPlayingVideoId) === ''}
+            disabled={!isConnected || getPreviousVideoId(playlist, currentPlayingVideoId) === ''}
             onPrevious={onPrevious} />
           <NextButton
             isSending={isSendingMap.get('PLAY_NEXT')}
-            disabled={getNextVideoId(playlist, currentPlayingVideoId) === ''}
+            disabled={!isConnected || getNextVideoId(playlist, currentPlayingVideoId) === ''}
             onNext={onNext} />
         </div>
         <div>
           <SyncButton
             isSending={isSendingMap.get('SYNC_TIME')}
-            disabled={currentPlayingVideoId === ''}
+            disabled={!isConnected || currentPlayingVideoId === ''}
             onSync={() => onSync(player.getCurrentTime())} />
         </div>
       </RowContainer>
@@ -69,6 +70,7 @@ const mapStateToProps = state => {
     currentPlayingVideoId: state.playerState.get('videoId'),
     isPlaying: state.playerState.get('isPlaying'),
     isSendingMap: state.isSendingMap,
+    isConnected: state.isConnected,
   }
 }
 

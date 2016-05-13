@@ -1,4 +1,4 @@
-const AddButton = ({ isAdding, onClick }) => {
+const AddButton = ({ isAdding, disabled, onClick }) => {
   const cn = isAdding ?
     'ui positive disabled loading icon button' :
     'ui positive icon button'
@@ -6,7 +6,7 @@ const AddButton = ({ isAdding, onClick }) => {
   return (
     <button
       className={cn}
-      disabled={isAdding}
+      disabled={isAdding || disabled}
       onClick={onClick}>
       <i className="plus icon"></i>
     </button>

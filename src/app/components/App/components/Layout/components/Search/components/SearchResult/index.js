@@ -4,7 +4,7 @@ import SearchResultItem from './components/SearchResultItem'
 
 export default class SearchResult extends Component {
   render() {
-    const { data, getIsInPlaylist, onAdd } = this.props
+    const { data, getIsInPlaylist, isConnected, onAdd } = this.props
 
     return (
       <div>
@@ -14,6 +14,7 @@ export default class SearchResult extends Component {
               key={index}
               data={o}
               isInPlaylist={getIsInPlaylist(o.id.videoId)}
+              isConnected={isConnected}
               onAdd={onAdd} />
           )
         }
@@ -24,6 +25,7 @@ export default class SearchResult extends Component {
 
 SearchResult.propTypes = {
   data: PropTypes.array.isRequired,
+  isConnected: PropTypes.bool.isRequired,
   getIsInPlaylist: PropTypes.func.isRequired,
   onAdd: PropTypes.func.isRequired,
 }

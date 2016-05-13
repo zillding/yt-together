@@ -36,7 +36,7 @@ export default class SearchResultItem extends Component {
   }
 
   render() {
-    const { data, isInPlaylist } = this.props
+    const { data, isInPlaylist, isConnected } = this.props
     const { peeking } = this.state
 
     return (
@@ -53,6 +53,7 @@ export default class SearchResultItem extends Component {
               <AddLabel/> :
               <AddButton
                 isAdding={this.state.isAdding}
+                disabled={!isConnected}
                 onClick={this._handleAdd} />
           }
         </ListItemControl>
@@ -64,5 +65,6 @@ export default class SearchResultItem extends Component {
 SearchResultItem.propTypes = {
   data: PropTypes.object.isRequired,
   isInPlaylist: PropTypes.bool.isRequired,
+  isConnected: PropTypes.bool.isRequired,
   onAdd: PropTypes.func.isRequired,
 }

@@ -128,19 +128,23 @@ function setRoomState(data) {
 
 export function sendUsername(username) {
   return (dispatch, getState) => {
-    dispatch({ type: 'SEND_USERNAME', username })
-
     const { socket } = getState()
-    socket.emit('new user', username)
+
+    if (socket.connected) {
+      dispatch({ type: 'SEND_USERNAME', username })
+      socket.emit('new user', username)
+    }
   }
 }
 
 export function sendAction(action, data) {
   return (dispatch, getState) => {
-    dispatch({ type: `SEND_${action}` })
-
     const { socket } = getState()
-    socket.emit('action', { type: action, data })
+
+    if (socket.connected) {
+      dispatch({ type: `SEND_${action}` })
+      socket.emit('action', { type: action, data })
+    }
   }
 }
 
