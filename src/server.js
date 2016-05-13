@@ -4,7 +4,7 @@ import SocketIO from 'socket.io'
 import { List } from 'immutable'
 import md5 from 'md5'
 
-import { findNumberOfUsersInRoom } from './utils'
+import { getNumberOfUsersInRoom } from './utils'
 
 //////////////////////////////////////////////
 // Global state data
@@ -52,7 +52,7 @@ io.on('connection', socket => {
 
     socket.emit('welcome', {
       room,
-      numberOfUsers: findNumberOfUsersInRoom(io, room),
+      numberOfUsers: getNumberOfUsersInRoom(io, room),
       playlist: playlist.toArray()
     })
 
@@ -84,7 +84,7 @@ io.on('connection', socket => {
     io.in(room).emit('lost user', username)
 
     // clean up data
-    if (findNumberOfUsersInRoom(io, room) === 0) {
+    if (getNumberOfUsersInRoom(io, room) === 0) {
       updateData(room, 'playlist', List())
       updateData(room, 'currentPlayingVideoId', '')
     }
