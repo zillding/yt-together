@@ -16,12 +16,7 @@ const containerStyle = {
 const style = {
   overflowY: 'auto',
   position: 'relative',
-  overflowY: 'auto',
 }
-
-const playerItemStyle = Object.assign({
-  flex: '0 0 content',
-}, style)
 
 const itemStyle = Object.assign({
   flex: 1,
@@ -30,7 +25,7 @@ const itemStyle = Object.assign({
 
 const Layout = ({ showSearch }) => (
   <div style={containerStyle}>
-    <div style={playerItemStyle}>
+    <div style={style}>
       <Player/>
     </div>
     <div style={itemStyle}>
