@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import { connect } from 'react-redux'
+import ReactTooltip from 'react-tooltip'
 
 import { sendUsername, setNotificationSystem } from 'actions'
 
@@ -41,6 +42,9 @@ const App = ({ roomName, isSendingUsername, sendUsername, setNotificationSystem 
     <div>
       { content }
       <Notification onReady={setNotificationSystem} />
+      <ReactTooltip
+        effect="solid"
+        place="left"/>
     </div>
   )
 }

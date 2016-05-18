@@ -37,6 +37,7 @@
     "react-notification-system": "^0.2.7",
     "react-redux": "^4.4.5",
     "react-timeago": "^3.0.0",
+    "react-tooltip": "^2.0.1",
     "react-youtube": "^6.1.0",
     "redux": "^3.5.1",
     "redux-logger": "^2.6.1",
