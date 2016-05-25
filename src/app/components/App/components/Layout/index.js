@@ -22,6 +22,7 @@ const style = {
 const itemStyle = Object.assign({
   flex: 1,
   marginLeft: 10,
+  minWidth: 500,
 }, style)
 
 const Layout = ({ showSidebar, showSearch }) => (
