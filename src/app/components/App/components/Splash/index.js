@@ -1,6 +1,9 @@
 import { Component, PropTypes } from 'react'
 import GitHubForkRibbon from 'react-github-fork-ribbon'
 
+import Header from './components/Header'
+import ErrorMessage from './components/ErrorMessage'
+
 const containerStyle = {
   position: 'fixed',
   top: 0,
@@ -98,21 +101,3 @@ Splash.propTypes = {
   isSendingUsername: PropTypes.bool,
   onSubmit: PropTypes.func.isRequired,
 }
-
-const Header = () => (
-  <h2 className="ui center aligned icon header">
-    <i className="youtube play icon"></i>
-    <div className="content">
-      Watch YouTube Together!
-      <div className="sub header">Greetings! Say hi to everyone. 🙋</div>
-    </div>
-  </h2>
-)
-
-const ErrorMessage = () => (
-  <div className="ui error message">
-    <ui className="list">
-      <li>Please enter your name.</li>
-    </ui>
-  </div>
-)
