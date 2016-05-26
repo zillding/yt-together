@@ -8,8 +8,6 @@ import { getNumberOfUsersInRoom } from './utils'
 
 //////////////////////////////////////////////
 // Global state data
-let playlist = List()
-let currentPlayingVideoId = ''
 const rooms = {
   defaultRoom: {
     playlist: List(),
