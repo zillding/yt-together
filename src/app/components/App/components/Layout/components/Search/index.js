@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { search, sendAction, toggleSearch } from 'actions'
+import { setSearchTerm, search, sendAction, toggleSearch } from 'actions'
 import { getVideoIndex } from 'utils'
 
 import { ColumnContainer, ColumnMain } from 'components/ColumnLayout'
@@ -14,11 +14,13 @@ class Search extends Component {
   render() {
     const {
       isSearching,
+      searchTerm,
       searchResult,
       searchError,
       playlist,
       isConnected,
       toggleSearch,
+      setSearchTerm,
       onSearch,
       onAdd,
     } = this.props
@@ -29,6 +31,8 @@ class Search extends Component {
           <RowMain style={{marginRight: 10}}>
             <SearchInput
               isSearching={isSearching}
+              value={searchTerm}
+              onChange={setSearchTerm}
               onSearch={onSearch} />
           </RowMain>
           <HideSearch onHide={toggleSearch} />
@@ -48,6 +52,7 @@ class Search extends Component {
 const mapStateToProps = state => {
   return {
     isSearching: state.isSearching,
+    searchTerm: state.searchTerm,
     searchResult: state.searchResult,
     searchError: state.searchError,
     playlist: state.roomState.get('playlist'),
@@ -58,6 +63,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     toggleSearch: () => dispatch(toggleSearch()),
+    setSearchTerm: text => dispatch(setSearchTerm(text)),
     onSearch: text => dispatch(search(text)),
     onAdd: data => dispatch(sendAction('ADD_VIDEO', data)),
   }

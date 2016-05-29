@@ -4,27 +4,34 @@ export default class SearchInput extends Component {
   constructor(props) {
     super(props)
     this._handleEnter = this._handleEnter.bind(this)
+    this._handleChange = this._handleChange.bind(this)
+  }
+
+  _handleChange(e) {
+    const text = e.target.value
+    this.props.onChange(text)
   }
 
   _handleEnter(e) {
     if (e.key === 'Enter') {
-      const text = this.refs.input.value.trim()
-      if (text) {
-        this.props.onSearch(text)
+      const { value, onSearch } = this.props
+      if (value) {
+        onSearch(value)
       }
     }
   }
 
   render() {
-    const { isSearching } = this.props
+    const { isSearching, value } = this.props
     const cn = `ui fluid left icon input${isSearching ? ' loading' : ''}`
 
     return (
       <div className={cn}>
         <input
-          ref="input"
           type="text"
+          value={value}
           onKeyPress={this._handleEnter}
+          onChange={this._handleChange}
           placeholder="Press enter to search..." />
         <i className="search icon"></i>
       </div>
@@ -34,5 +41,7 @@ export default class SearchInput extends Component {
 
 SearchInput.propTypes = {
   isSearching: PropTypes.bool.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
   onSearch: PropTypes.func.isRequired,
 }

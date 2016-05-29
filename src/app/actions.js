@@ -34,6 +34,10 @@ export function search(text) {
   }
 }
 
+export function setSearchTerm(text) {
+  return { type: 'SET_SEARCH_TERM', text }
+}
+
 function setSearchResult(data) {
   return { type: 'SET_SEARCH_RESULT', data }
 }

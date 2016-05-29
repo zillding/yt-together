@@ -71,6 +71,15 @@ export function isSearching(state = false, action) {
   }
 }
 
+export function searchTerm(state = '', action) {
+  switch (action.type) {
+    case 'SET_SEARCH_TERM':
+      return action.text
+    default:
+      return state
+  }
+}
+
 export function searchResult(state = [], action) {
   switch (action.type) {
     case 'SET_SEARCH_RESULT':
